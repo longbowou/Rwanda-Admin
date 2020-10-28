@@ -1,5 +1,7 @@
-import ApiService from "@/core/services/api.service";
 import JwtService from "@/core/services/jwt.service";
+import { queryAccount } from "@/graphql/admin-queries";
+import { apolloClient } from "@/vue-apollo";
+import _ from "lodash";
 
 // action types
 export const VERIFY_AUTH = "verifyAuth";
@@ -11,95 +13,68 @@ export const UPDATE_USER = "updateUser";
 // mutation types
 export const PURGE_AUTH = "logOut";
 export const SET_AUTH = "setUser";
-export const SET_ERROR = "setError";
+
+const currentAuth = JwtService.getAuth();
+const isAuthenticated = currentAuth !== null;
+if (isAuthenticated) {
+  apolloClient.query({ query: queryAccount }).then(result => {
+    state.admin = result.data.admin;
+  });
+}
 
 const state = {
-  errors: null,
-  user: {},
-  isAuthenticated: !!JwtService.getToken()
+  admin: null,
+  auth: currentAuth,
+  isAuthenticated: isAuthenticated
 };
 
 const getters = {
-  currentUser(state) {
-    return state.user;
+  currentAdmin(state) {
+    return state.admin;
   },
   isAuthenticated(state) {
     return state.isAuthenticated;
+  },
+  isNotAuthenticated(state) {
+    return !state.isAuthenticated;
   }
 };
 
 const actions = {
-  [LOGIN](context, credentials) {
+  [LOGIN](context, payload) {
     return new Promise(resolve => {
-      ApiService.post("login", credentials)
-        .then(({ data }) => {
-          context.commit(SET_AUTH, data);
-          resolve(data);
-        })
-        .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors);
-        });
+      context.commit(SET_AUTH, payload);
+      resolve(payload);
     });
   },
   [LOGOUT](context) {
-    context.commit(PURGE_AUTH);
-  },
-  [REGISTER](context, credentials) {
-    return new Promise((resolve, reject) => {
-      ApiService.post("users", { user: credentials })
-        .then(({ data }) => {
-          context.commit(SET_AUTH, data);
-          resolve(data);
-        })
-        .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors);
-          reject(response);
-        });
-    });
-  },
-  [VERIFY_AUTH](context) {
-    if (JwtService.getToken()) {
-      ApiService.setHeader();
-      ApiService.get("verify")
-        .then(({ data }) => {
-          context.commit(SET_AUTH, data);
-        })
-        .catch(({ response }) => {
-          context.commit(SET_ERROR, response.data.errors);
-        });
-    } else {
+    return new Promise(resolve => {
       context.commit(PURGE_AUTH);
-    }
+      resolve();
+    });
   },
   [UPDATE_USER](context, payload) {
-    const { email, username, password, image, bio } = payload;
-    const user = { email, username, bio, image };
-    if (password) {
-      user.password = password;
-    }
-
-    return ApiService.put("user", user).then(({ data }) => {
-      context.commit(SET_AUTH, data);
-      return data;
-    });
+    context.commit(SET_AUTH, payload);
   }
 };
 
 const mutations = {
-  [SET_ERROR](state, error) {
-    state.errors = error;
-  },
-  [SET_AUTH](state, user) {
+  [SET_AUTH](state, payload) {
     state.isAuthenticated = true;
-    state.user = user;
-    state.errors = {};
-    JwtService.saveToken(state.user.token);
+    if (_.isObject(payload.admin)) {
+      state.admin = payload.admin;
+    }
+
+    if (_.isObject(payload.auth)) {
+      state.auth = payload.auth;
+      JwtService.saveAuth(state.auth);
+    }
   },
   [PURGE_AUTH](state) {
     state.isAuthenticated = false;
-    state.user = {};
-    state.errors = {};
-    JwtService.destroyToken();
+    state.admin = null;
+    state.auth = null;
+    JwtService.destroyAuth();
   }
 };
 

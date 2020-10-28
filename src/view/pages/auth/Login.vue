@@ -1,202 +1,198 @@
 <template>
-  <div>
-    <!--begin::Content header-->
+  <div class="d-flex flex-column flex-root">
+    <!--begin::Login-->
     <div
-      class="position-absolute top-0 right-0 text-right mt-5 mb-15 mb-lg-0 flex-column-auto justify-content-center py-5 px-10"
+      class="login login-4 wizard d-flex flex-column flex-lg-row flex-column-fluid"
     >
-      <span class="font-weight-bold font-size-3 text-dark-60">
-        Don't have an account yet?
-      </span>
-      <router-link
-        class="font-weight-bold font-size-3 ml-2"
-        :to="{ name: 'register' }"
+      <!--begin::Content-->
+      <div
+        class="login-container order-2 order-lg-1 d-flex flex-center flex-row-fluid px-7 pt-lg-0 pb-lg-0 pt-4 pb-6 bg-white"
       >
-        Sign Up!
-      </router-link>
-    </div>
-    <!--end::Content header-->
-
-    <!--begin::Signin-->
-    <div class="login-form login-signin">
-      <div class="text-center mb-10 mb-lg-20">
-        <h3 class="font-size-h1">Sign In</h3>
-        <p class="text-muted font-weight-semi-bold">
-          Enter your username and password
-        </p>
-      </div>
-
-      <!--begin::Form-->
-      <b-form class="form" @submit.stop.prevent="onSubmit">
-        <div role="alert" class="alert alert-info">
-          <div class="alert-text">
-            Use account <strong>admin@demo.com</strong> and password
-            <strong>demo</strong> to continue.
-          </div>
-        </div>
-
-        <div
-          role="alert"
-          v-bind:class="{ show: errors.length }"
-          class="alert fade alert-danger"
-        >
-          <div class="alert-text" v-for="(error, i) in errors" :key="i">
-            {{ error }}
-          </div>
-        </div>
-
-        <b-form-group
-          id="example-input-group-1"
-          label=""
-          label-for="example-input-1"
-        >
-          <b-form-input
-            class="form-control form-control-solid h-auto py-5 px-6"
-            id="example-input-1"
-            name="example-input-1"
-            v-model="$v.form.email.$model"
-            :state="validateState('email')"
-            aria-describedby="input-1-live-feedback"
-          ></b-form-input>
-
-          <b-form-invalid-feedback id="input-1-live-feedback">
-            Email is required and a valid email address.
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <b-form-group
-          id="example-input-group-2"
-          label=""
-          label-for="example-input-2"
-        >
-          <b-form-input
-            class="form-control form-control-solid h-auto py-5 px-6"
-            type="password"
-            id="example-input-2"
-            name="example-input-2"
-            v-model="$v.form.password.$model"
-            :state="validateState('password')"
-            aria-describedby="input-2-live-feedback"
-          ></b-form-input>
-
-          <b-form-invalid-feedback id="input-2-live-feedback">
-            Password is required.
-          </b-form-invalid-feedback>
-        </b-form-group>
-
-        <!--begin::Action-->
-        <div
-          class="form-group d-flex flex-wrap justify-content-between align-items-center"
-        >
-          <a
-            href="#"
-            class="text-dark-60 text-hover-primary my-3 mr-2"
-            id="kt_login_forgot"
-          >
-            Forgot Password ?
+        <!--begin::Wrapper-->
+        <div class="login-content d-flex flex-column pt-lg-0 pt-12">
+          <!--begin::Logo-->
+          <a href="#" class="login-logo pb-2">
+            <img src="favicon.png" class="max-h-70px" alt="" />
           </a>
-          <button
-            ref="kt_login_signin_submit"
-            class="btn btn-primary font-weight-bold px-9 py-4 my-3 font-size-3"
-          >
-            Sign In
-          </button>
+          <!--end::Logo-->
+
+          <!--begin::Signin-->
+          <div class="login-form">
+            <!--begin::Form-->
+            <form class="form" id="kt_login_singin_form" action="">
+              <!--begin::Title-->
+              <div class="pb-5">
+                <h3
+                  class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg"
+                >
+                  Sign In
+                </h3>
+              </div>
+              <!--begin::Title-->
+
+              <!--begin::Form group-->
+              <div class="form-group">
+                <label class="font-size-h6 font-weight-bolder text-dark"
+                  >Username or Email</label
+                >
+                <input
+                  class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0"
+                  type="text"
+                  name="username"
+                  autocomplete="off"
+                />
+              </div>
+              <!--end::Form group-->
+
+              <!--begin::Form group-->
+              <div class="form-group">
+                <div class="d-flex justify-content-between mt-n5">
+                  <label class="font-size-h6 font-weight-bolder text-dark pt-5"
+                    >Password</label
+                  >
+
+                  <button
+                    class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"
+                  >
+                    Forgot Password ?
+                  </button>
+                </div>
+                <input
+                  class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0"
+                  type="password"
+                  name="password"
+                  autocomplete="off"
+                />
+              </div>
+              <!--end::Form group-->
+
+              <!--begin::Action-->
+              <div class="pb-lg-0 pb-5">
+                <button
+                  type="submit"
+                  id="kt_login_singin_form_submit_button"
+                  class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3"
+                >
+                  Sign In
+                </button>
+              </div>
+              <!--end::Action-->
+            </form>
+            <!--end::Form-->
+          </div>
+          <!--end::Signin-->
         </div>
-        <!--end::Action-->
-      </b-form>
-      <!--end::Form-->
+        <!--end::Wrapper-->
+      </div>
+      <!--begin::Content-->
+
+      <!--begin::Aside-->
+      <div
+        class="login-aside order-1 order-lg-2 bgi-no-repeat bgi-position-x-right"
+      >
+        <div
+          class="login-conteiner bgi-no-repeat bgi-position-x-right bgi-position-y-bottom"
+          style="background-image: url(media/svg/illustrations/login-visual-4.svg);"
+        >
+          <!--begin::Aside title-->
+          <h3
+            class="pt-lg-40 pl-lg-20 pb-lg-0 pl-10 py-20 m-0 d-flex justify-content-lg-start font-weight-boldest display5 display1-lg text-white"
+          >
+            We Got<br />
+            A Surprise<br />
+            For You
+          </h3>
+          <!--end::Aside title-->
+        </div>
+      </div>
+      <!--end::Aside-->
     </div>
-    <!--end::Signin-->
+    <!--end::Login-->
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
+@import "~@/assets/sass/pages/login/login-4.scss";
 .spinner.spinner-right {
   padding-right: 3.5rem !important;
 }
 </style>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import { LOGIN, LOGOUT } from "@/core/services/store/auth.module";
 
-import { validationMixin } from "vuelidate";
-import { email, minLength, required } from "vuelidate/lib/validators";
+import { formMixin, toastMixin } from "@/view/mixins";
+import { READ_LOGIN_NOTIFICATIONS } from "@/core/services/store/notifications.module";
+import { RESET_NEXT_PATH } from "@/core/services/store/router.module";
+import JwtService from "@/core/services/jwt.service";
 
 export default {
-  mixins: [validationMixin],
+  mixins: [formMixin, toastMixin],
   name: "login",
   data() {
     return {
-      // Remove this dummy login info
-      form: {
-        email: "admin@demo.com",
-        password: "demo"
-      }
+      input: {
+        login: "",
+        password: ""
+      },
+      errors: []
     };
   },
-  validations: {
-    form: {
-      email: {
-        required,
-        email
-      },
-      password: {
-        required,
-        minLength: minLength(3)
-      }
+  beforeCreate() {
+    if (!window._.isNull(JwtService.getAuth())) {
+      this.$router.push({ name: "dashboard" });
     }
   },
   methods: {
-    validateState(name) {
-      const { $dirty, $error } = this.$v.form[name];
-      return $dirty ? !$error : null;
-    },
-    resetForm() {
-      this.form = {
-        email: null,
-        password: null
-      };
+    async onSubmit(evt) {
+      evt.preventDefault();
+      // clear existing errors
+      await this.$store.dispatch(LOGOUT);
 
-      this.$nextTick(() => {
-        this.$v.$reset();
+      // set spinner to submit button
+      const submitButton = window.$("#kt_login_signin_submit");
+      submitButton.attr("disabled", true);
+      submitButton.addClass("spinner spinner-light spinner-right");
+
+      this.errors = [];
+
+      let result = await this.$apollo.mutate({
+        mutation: "",
+        variables: {
+          input: this.input
+        }
       });
-    },
-    onSubmit() {
-      this.$v.form.$touch();
-      if (this.$v.form.$anyError) {
+
+      submitButton.removeAttr("disabled");
+      submitButton.removeClass("spinner spinner-light spinner-right");
+
+      this.errors = result.data.login.errors;
+      if (!window._.isEmpty(this.errors)) {
         return;
       }
 
-      const email = this.$v.form.email.$model;
-      const password = this.$v.form.password.$model;
+      await this.$store.dispatch(LOGIN, {
+        account: result.data.login.account,
+        auth: result.data.login.auth
+      });
 
-      // clear existing errors
-      this.$store.dispatch(LOGOUT);
+      await this.$store.dispatch(READ_LOGIN_NOTIFICATIONS);
 
-      // set spinner to submit button
-      const submitButton = this.$refs["kt_login_signin_submit"];
-      submitButton.classList.add("spinner", "spinner-light", "spinner-right");
+      if (!window._.isNull(this.nextPath)) {
+        await this.$router.push({ path: this.nextPath });
 
-      // dummy delay
-      setTimeout(() => {
-        // send login request
-        this.$store
-          .dispatch(LOGIN, { email, password })
-          // go to which page after successfully login
-          .then(() => this.$router.push({ name: "dashboard" }));
-
-        submitButton.classList.remove(
-          "spinner",
-          "spinner-light",
-          "spinner-right"
-        );
-      }, 2000);
+        await this.$store.dispatch(RESET_NEXT_PATH);
+      } else {
+        await this.$router.push({ name: "dashboard" });
+      }
     }
   },
   computed: {
-    ...mapState({
-      errors: state => state.auth.errors
-    })
+    ...mapGetters(["isAuthenticated", "loginNotifications", "nextPath"]),
+    hasNotifications() {
+      return !window._.isEmpty(this.loginNotifications);
+    }
   }
 };
 </script>

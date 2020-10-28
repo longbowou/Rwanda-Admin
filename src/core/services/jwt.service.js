@@ -1,15 +1,34 @@
-const ID_TOKEN_KEY = "id_token";
+import _ from "lodash";
+import { initRestartWebsockets } from "@/vue-apollo";
 
-export const getToken = () => {
-  return window.localStorage.getItem(ID_TOKEN_KEY);
+const AUTH_KEY = "AUTH_OBJECT_KEY";
+
+export const getAuth = () => {
+  let auth = window.localStorage.getItem(AUTH_KEY);
+  if (_.isString(auth)) {
+    let currentAuth = JSON.parse(auth);
+    if (
+      currentAuth !== null &&
+      parseInt(currentAuth.tokenExpiresIn) > Math.floor(Date.now() / 1000)
+    ) {
+      return currentAuth;
+    }
+  }
+  return null;
 };
 
-export const saveToken = token => {
-  window.localStorage.setItem(ID_TOKEN_KEY, token);
+export const saveAuth = auth => {
+  window.localStorage.setItem(AUTH_KEY, JSON.stringify(auth));
+  initRestartWebsockets().then(() => {});
 };
 
-export const destroyToken = () => {
-  window.localStorage.removeItem(ID_TOKEN_KEY);
+export const destroyAuth = () => {
+  window.localStorage.removeItem(AUTH_KEY);
+  initRestartWebsockets().then(() => {});
 };
 
-export default { getToken, saveToken, destroyToken };
+export default {
+  getAuth: getAuth,
+  saveAuth: saveAuth,
+  destroyAuth: destroyAuth
+};

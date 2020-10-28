@@ -376,6 +376,11 @@ export default new Router({
       ]
     },
     {
+      name: "login",
+      path: "/login",
+      component: () => import("@/view/pages/auth/Login")
+    },
+    {
       path: "/error",
       name: "error",
       component: () => import("@/view/pages/error/Error.vue"),
@@ -409,22 +414,6 @@ export default new Router({
           path: "error-6",
           name: "error-6",
           component: () => import("@/view/pages/error/Error-6.vue")
-        }
-      ]
-    },
-    {
-      path: "/",
-      component: () => import("@/view/pages/auth/Auth"),
-      children: [
-        {
-          name: "login",
-          path: "/login",
-          component: () => import("@/view/pages/auth/Login")
-        },
-        {
-          name: "register",
-          path: "/register",
-          component: () => import("@/view/pages/auth/Register")
         }
       ]
     },

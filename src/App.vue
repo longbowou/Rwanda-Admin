@@ -23,6 +23,7 @@
 
 <script>
 import { OVERRIDE_LAYOUT_CONFIG } from "@/core/services/store/config.module";
+import "bootstrap-notify";
 
 export default {
   name: "MetronicVue",

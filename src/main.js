@@ -2,8 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "@/core/services/store";
-import ApiService from "@/core/services/api.service";
-import MockService from "@/core/mock/mock.service";
+// import ApiService from "@/core/services/api.service";
+// import MockService from "@/core/mock/mock.service";
 import { VERIFY_AUTH } from "@/core/services/store/auth.module";
 import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
 
@@ -30,10 +30,10 @@ import "@/core/plugins/metronic";
 import "@mdi/font/css/materialdesignicons.css";
 
 // API service init
-ApiService.init();
+// ApiService.init();
 
 // Remove this to disable mock API
-MockService.init();
+// MockService.init();
 
 router.beforeEach((to, from, next) => {
   // Ensure we checked auth before each page load.

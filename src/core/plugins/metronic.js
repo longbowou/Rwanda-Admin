@@ -99,3 +99,10 @@ window.KTLayoutScrolltop = KTLayoutScrolltop;
 
 import KTLayoutSearch from "@/assets/js/layout/extended/search.js";
 window.KTLayoutSearch = KTLayoutSearch;
+
+import $ from "jquery";
+window.$ = $;
+window.jQuery = $;
+
+import _ from "lodash";
+window._ = _;
