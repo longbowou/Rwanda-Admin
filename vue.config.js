@@ -1,8 +1,8 @@
 const path = require("path");
 
 module.exports = {
-  publicPath:
-    process.env.NODE_ENV === "production" ? "/metronic/vue/demo1/" : "/",
+  publicPath: "/",
+
   configureWebpack: {
     resolve: {
       alias: {
@@ -34,5 +34,14 @@ module.exports = {
       }
     }
   },
-  transpileDependencies: ["vuetify"]
+
+  transpileDependencies: ["vuetify"],
+
+  pluginOptions: {
+    apollo: {
+      enableMocks: true,
+      enableEngine: false,
+      lintGQL: true
+    }
+  }
 };

@@ -28,6 +28,7 @@ import "@/core/plugins/inline-svg";
 import "@/core/plugins/apexcharts";
 import "@/core/plugins/metronic";
 import "@mdi/font/css/materialdesignicons.css";
+import { createProvider } from "@/vue-apollo";
 
 // API service init
 // ApiService.init();
@@ -53,5 +54,6 @@ new Vue({
   store,
   i18n,
   vuetify,
+  apolloProvider: createProvider(),
   render: h => h(App)
 }).$mount("#app");
