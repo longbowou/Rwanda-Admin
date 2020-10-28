@@ -4,7 +4,7 @@ import router from "./router";
 import store from "@/core/services/store";
 // import ApiService from "@/core/services/api.service";
 // import MockService from "@/core/mock/mock.service";
-import { VERIFY_AUTH } from "@/core/services/store/auth.module";
+import { LOGOUT } from "@/core/services/store/auth.module";
 import { RESET_LAYOUT_CONFIG } from "@/core/services/store/config.module";
 
 Vue.config.productionTip = false;
@@ -29,6 +29,11 @@ import "@/core/plugins/apexcharts";
 import "@/core/plugins/metronic";
 import "@mdi/font/css/materialdesignicons.css";
 import { createProvider } from "@/vue-apollo";
+import {
+  UPDATE_LAST_PATH,
+  UPDATE_NEXT_PATH
+} from "@/core/services/store/router.module";
+import JwtService from "@/core/services/jwt.service";
 
 // API service init
 // ApiService.init();
@@ -37,16 +42,34 @@ import { createProvider } from "@/vue-apollo";
 // MockService.init();
 
 router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (window._.isNull(JwtService.getAuth())) {
+      store.dispatch(UPDATE_NEXT_PATH, to.fullPath).then(() => {
+        store.dispatch(LOGOUT).then(() => {
+          next({
+            name: "signin"
+          });
+        });
+      });
+    }
+  }
+
   // Ensure we checked auth before each page load.
-  Promise.all([store.dispatch(VERIFY_AUTH)]).then(next);
+  Promise.all([]).then(next);
 
   // reset config to initial state
   store.dispatch(RESET_LAYOUT_CONFIG);
 
-  // Scroll page to top on every route change
-  setTimeout(() => {
-    window.scrollTo(0, 0);
-  }, 100);
+  if (!to.meta.hasOwnProperty("scrollToTop") || to.meta.scrollToTop) {
+    // Scroll page to top on every route change
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 300);
+  }
+});
+
+router.afterEach(to => {
+  store.dispatch(UPDATE_LAST_PATH, to.path);
 });
 
 new Vue({

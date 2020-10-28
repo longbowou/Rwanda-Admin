@@ -13,7 +13,8 @@ export default new Router({
         {
           path: "/dashboard",
           name: "dashboard",
-          component: () => import("@/view/pages/Dashboard.vue")
+          component: () => import("@/view/pages/Dashboard.vue"),
+          meta: { requiresAuth: true }
         },
         {
           path: "/builder",
@@ -376,7 +377,7 @@ export default new Router({
       ]
     },
     {
-      name: "login",
+      name: "signin",
       path: "/login",
       component: () => import("@/view/pages/auth/Login")
     },

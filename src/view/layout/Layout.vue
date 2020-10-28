@@ -91,15 +91,16 @@ export default {
   },
   mounted() {
     // check if current user is authenticated
-    if (!this.isAuthenticated) {
-      this.$router.push({ name: "login" });
-    }
+    this.$store.dispatch(REMOVE_BODY_CLASSNAME, "page-loading");
+    // if (!this.isAuthenticated) {
+    //   this.$router.push({ name: "login" });
+    // }
 
     // Simulate the delay page loading
-    setTimeout(() => {
-      // Remove page loader after some time
-      this.$store.dispatch(REMOVE_BODY_CLASSNAME, "page-loading");
-    }, 2000);
+    // setTimeout(() => {
+    //   // Remove page loader after some time
+    //   this.$store.dispatch(REMOVE_BODY_CLASSNAME, "page-loading");
+    // }, 2000);
   },
   methods: {},
   computed: {

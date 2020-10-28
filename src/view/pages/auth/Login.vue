@@ -12,21 +12,46 @@
         <div class="login-content d-flex flex-column pt-lg-0 pt-12">
           <!--begin::Logo-->
           <a href="#" class="login-logo pb-2">
-            <img src="favicon.png" class="max-h-70px" alt="" />
+            <img src="media/logos/logo.png" class="max-h-70px" alt="" />
           </a>
           <!--end::Logo-->
 
           <!--begin::Signin-->
           <div class="login-form">
             <!--begin::Form-->
-            <form class="form" id="kt_login_singin_form" action="">
+            <form class="form" id="kt_login_singin_form" @submit="onSubmit">
               <!--begin::Title-->
               <div class="pb-5">
-                <h3
+                <h2
                   class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg"
                 >
                   Sign In
-                </h3>
+                </h2>
+
+                <template v-for="(notification, i) of loginNotifications">
+                  <div
+                    v-bind:key="i"
+                    class="d-flex align-items-center bg-light-success rounded p-5 mt-3 mb-0 gutter-b"
+                  >
+                    <span
+                      class="svg-icon svg-icon-success svg-icon-3x pulse pulse-success"
+                    >
+                      <span class="pulse-ring"></span>
+                      <inline-svg src="media/svg/icons/Code/Compiling.svg" />
+                    </span>
+
+                    <div class="d-flex flex-column flex-grow-1 mr-9">
+                      <p
+                        class="font-weight-normal text-dark-75 text-hover-primary font-size-lg mb-1"
+                      >
+                        {{ notification.message }}
+                      </p>
+                      <span class="text-muted font-size-sm">{{
+                        notification.otherMessage
+                      }}</span>
+                    </div>
+                  </div>
+                </template>
               </div>
               <!--begin::Title-->
 
@@ -35,12 +60,22 @@
                 <label class="font-size-h6 font-weight-bolder text-dark"
                   >Username or Email</label
                 >
-                <input
+                <b-form-input
+                  required
+                  autofocus
                   class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0"
                   type="text"
-                  name="username"
+                  name="login"
+                  v-model="input.login"
+                  :state="validateState('login')"
+                  placeholder="Username or Email"
                   autocomplete="off"
                 />
+                <b-form-invalid-feedback id="input-live-feedback">
+                  <p :key="message" v-for="message of errorMessages('login')">
+                    {{ message }}
+                  </p>
+                </b-form-invalid-feedback>
               </div>
               <!--end::Form group-->
 
@@ -57,12 +92,24 @@
                     Forgot Password ?
                   </button>
                 </div>
-                <input
+                <b-form-input
+                  required
                   class="form-control form-control-solid h-auto py-7 px-6 rounded-lg border-0"
                   type="password"
                   name="password"
+                  v-model="input.password"
+                  :state="validateState('password')"
+                  placeholder="Password"
                   autocomplete="off"
                 />
+                <b-form-invalid-feedback id="input-live-feedback">
+                  <p
+                    :key="message"
+                    v-for="message of errorMessages('password')"
+                  >
+                    {{ message }}
+                  </p>
+                </b-form-invalid-feedback>
               </div>
               <!--end::Form group-->
 
@@ -71,7 +118,7 @@
                 <button
                   type="submit"
                   id="kt_login_singin_form_submit_button"
-                  class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3"
+                  class="btn btn-dark font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3"
                 >
                   Sign In
                 </button>
@@ -113,6 +160,7 @@
 
 <style lang="scss">
 @import "~@/assets/sass/pages/login/login-4.scss";
+
 .spinner.spinner-right {
   padding-right: 3.5rem !important;
 }
@@ -126,6 +174,8 @@ import { formMixin, toastMixin } from "@/view/mixins";
 import { READ_LOGIN_NOTIFICATIONS } from "@/core/services/store/notifications.module";
 import { RESET_NEXT_PATH } from "@/core/services/store/router.module";
 import JwtService from "@/core/services/jwt.service";
+import { login } from "@/graphql/auth-mutations";
+import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
 
 export default {
   mixins: [formMixin, toastMixin],
@@ -144,6 +194,9 @@ export default {
       this.$router.push({ name: "dashboard" });
     }
   },
+  mounted() {
+    this.$store.dispatch(SET_HEAD_TITLE, "Login");
+  },
   methods: {
     async onSubmit(evt) {
       evt.preventDefault();
@@ -151,14 +204,14 @@ export default {
       await this.$store.dispatch(LOGOUT);
 
       // set spinner to submit button
-      const submitButton = window.$("#kt_login_signin_submit");
+      const submitButton = window.$("#kt_login_singin_form_submit_button");
       submitButton.attr("disabled", true);
       submitButton.addClass("spinner spinner-light spinner-right");
 
       this.errors = [];
 
       let result = await this.$apollo.mutate({
-        mutation: "",
+        mutation: login,
         variables: {
           input: this.input
         }
@@ -173,7 +226,7 @@ export default {
       }
 
       await this.$store.dispatch(LOGIN, {
-        account: result.data.login.account,
+        admin: result.data.login.admin,
         auth: result.data.login.auth
       });
 

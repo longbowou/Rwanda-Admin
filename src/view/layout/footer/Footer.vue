@@ -6,38 +6,23 @@
       v-bind:class="{ 'container-fluid': widthFluid, container: !widthFluid }"
     >
       <div class="text-dark">
-        <span class="text-muted font-weight-bold mr-2">
-          2020 &nbsp;&copy;&nbsp;
-        </span>
-        <a
-          href="http://keenthemes.com/metronic"
-          target="_blank"
-          class="text-dark-75 text-hover-primary"
-        >
-          Keenthemes
+        <img
+          alt="Logo"
+          src="media/logos/logo.png"
+          class="logo-sticky max-h-35px"
+        />
+        <span class="text-muted font-weight-bold mx-2">2020 ©</span>
+        <a href="#" class="text-primary text-hover-primary">
+          Maison du Digitale
         </a>
       </div>
       <div class="nav nav-dark">
         <a
-          href="http://keenthemes.com/metronic"
+          href="https://gitlab.com/longbowou"
           target="_blank"
-          class="nav-link pr-3 pl-0"
+          class="text-white opacity-55 pl-0 text-hover-primary"
         >
-          About
-        </a>
-        <a
-          href="http://keenthemes.com/metronic"
-          target="_blank"
-          class="nav-link px-3"
-        >
-          Team
-        </a>
-        <a
-          href="http://keenthemes.com/metronic"
-          target="_blank"
-          class="nav-link pl-3 pr-0"
-        >
-          Contact
+          Powered by Longbowou
         </a>
       </div>
     </div>

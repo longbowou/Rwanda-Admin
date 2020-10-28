@@ -4,7 +4,6 @@ import { apolloClient } from "@/vue-apollo";
 import _ from "lodash";
 
 // action types
-export const VERIFY_AUTH = "verifyAuth";
 export const LOGIN = "login";
 export const LOGOUT = "logout";
 export const REGISTER = "register";
