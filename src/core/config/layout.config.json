@@ -3,15 +3,15 @@
   "self": {
     "layout": "default",
     "logo": {
-      "dark": "media/logos/logo-light.png",
-      "light": "media/logos/logo-dark.png",
-      "brand": "media/logos/logo-light.png",
-      "green": "media/logos/logo-light.png"
+      "dark": "media/logos/logo.png",
+      "light": "media/logos/logo.png",
+      "brand": "media/logos/logo.png",
+      "green": "media/logos/logo.png"
     }
   },
   "loader": {
     "type": "spinner-logo",
-    "logo": "media/logos/logo-letter-1.png",
+    "logo": "media/logos/logo.png",
     "message": "Please wait..."
   },
   "breakpoints": {

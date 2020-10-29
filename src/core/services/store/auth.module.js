@@ -1,5 +1,5 @@
 import JwtService from "@/core/services/jwt.service";
-import { queryAccount } from "@/graphql/admin-queries";
+import { queryAdmin } from "@/graphql/admin-queries";
 import { apolloClient } from "@/vue-apollo";
 import _ from "lodash";
 
@@ -16,7 +16,7 @@ export const SET_AUTH = "setUser";
 const currentAuth = JwtService.getAuth();
 const isAuthenticated = currentAuth !== null;
 if (isAuthenticated) {
-  apolloClient.query({ query: queryAccount }).then(result => {
+  apolloClient.query({ query: queryAdmin }).then(result => {
     state.admin = result.data.admin;
   });
 }

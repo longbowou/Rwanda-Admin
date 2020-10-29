@@ -20,7 +20,7 @@
         <a
           href="https://gitlab.com/longbowou"
           target="_blank"
-          class="text-white opacity-55 pl-0 text-hover-primary"
+          class="text-muted pl-0 text-hover-primary"
         >
           Powered by Longbowou
         </a>
