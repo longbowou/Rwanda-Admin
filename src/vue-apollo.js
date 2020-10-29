@@ -88,7 +88,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
       if (
         error.message === "Signature has expired" ||
-        error.message === "ACCOUNT_REQUIRED"
+        error.message === "ADMIN_REQUIRED"
       ) {
         store.dispatch(UPDATE_NEXT_PATH, store.getters.lastPath).then(() => {
           store.dispatch(LOGOUT).then(() => {
