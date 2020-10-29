@@ -17,6 +17,27 @@
               <h3 class="card-label">
                 {{ litigation ? litigation.title : null }}
               </h3>
+
+              <span
+                :class="[
+                  'ml-3 label label-xl font-weight-bold label-inline label-square',
+                  litigation.opened && 'label-dark',
+                  litigation.handled && 'label-success'
+                ]"
+              >
+                {{ litigation.status }}
+              </span>
+
+              <span
+                v-if="litigation.handled"
+                :class="[
+                  'ml-3 label label-xl font-weight-bold label-inline label-square',
+                  litigation.approved && 'label-success',
+                  litigation.canceled && 'label-danger'
+                ]"
+              >
+                {{ litigation.decision }}
+              </span>
             </div>
           </div>
 

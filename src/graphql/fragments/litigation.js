@@ -8,6 +8,8 @@ export const litigationFields = gql`
     decision
     status
     canBeHandled
+    opened
+    handled
     approved
     canceled
   }
