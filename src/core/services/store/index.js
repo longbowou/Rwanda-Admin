@@ -8,6 +8,7 @@ import breadcrumbs from "./breadcrumbs.module";
 import notifications from "./notifications.module";
 import router from "./router.module";
 import htmlHead from "./htmlhead.module";
+import params from "./parameters.module";
 
 Vue.use(Vuex);
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     breadcrumbs,
     router,
     notifications,
-    htmlHead
+    htmlHead,
+    params
   }
 });

@@ -17,9 +17,15 @@ export default new Router({
           meta: { requiresAuth: true }
         },
         {
-          path: "/builder",
-          name: "builder",
-          component: () => import("@/view/pages/Builder.vue")
+          path: "/disputes",
+          name: "disputes",
+          component: () => import("@/view/pages/disputes/Datatable"),
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/disputes/:id",
+          name: "disputes-view",
+          component: () => import("@/view/pages/disputes/View")
         }
       ]
     },

@@ -61,8 +61,8 @@ type AdminQuery {
     admin: AdminType!
     "Fund list"
     funds(id: UUID): [FundType]
-    "Parameter list"
-    parameters(id: UUID): [ParameterType]
+    litigation(id: UUID!): LitigationType!
+    parameters: ParametersType!
     "ServiceCategory list"
     serviceCategories(id: UUID): [ServiceCategoryType]
     "Service list"
@@ -182,6 +182,7 @@ type LitigationType {
     account: AccountType!
     admin: AdminType
     approved: Boolean!
+    canBeHandled: Boolean!
     canceled: Boolean!
     content: String!
     createdAt: DateTime!
@@ -213,12 +214,9 @@ type OperationType {
     updatedAt: DateTime!
 }
 
-type ParameterType {
-    createdAt: DateTime!
-    id: UUID!
-    label: String!
-    updatedAt: DateTime!
-    value: String!
+type ParametersType {
+    basePrice: String!
+    currency: String!
 }
 
 type RefundType {

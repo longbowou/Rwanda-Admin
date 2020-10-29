@@ -44,7 +44,12 @@
     "vue2-perfect-scrollbar": "^1.5.0",
     "vuelidate": "^0.7.5",
     "vuetify": "^2.2.26",
-    "vuex": "^3.3.0"
+    "vuex": "^3.3.0",
+    "datatables.net": "^1.10.21",
+    "datatables.net-autofill": "^2.3.5",
+    "datatables.net-bs4": "^1.10.21",
+    "datatables.net-buttons": "^1.6.3",
+    "datatables.net-responsive": "^2.2.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.3.1",
