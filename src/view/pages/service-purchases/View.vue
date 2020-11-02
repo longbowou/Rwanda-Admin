@@ -128,15 +128,75 @@
     </div>
     <!--end::Card-->
     <router-view v-if="servicePurchase.hasBeenAccepted" />
+
+    <b-modal ref="handleModal" class="modal fade">
+      <template #modal-header="{close}">
+        <h5 class="modal-title">
+          Do you really want to handle the litigation ?
+        </h5>
+        <button type="button" class="close" @click="close()">
+          <i aria-hidden="true" class="ki ki-close"></i>
+        </button>
+      </template>
+
+      <template #default>
+        <form @submit="handle" action="#">
+          <h3>{{ litigation.title }}</h3>
+          <br />
+          <b-textarea
+            required
+            autofocus
+            v-model="handleReason"
+            rows="4"
+            class="form-control form-control-lg form-control-solid"
+            type="text"
+            placeholder="Reason why"
+            autocomplete="off"
+          />
+
+          <input ref="submitModal" type="submit" style="display: none" />
+        </form>
+      </template>
+
+      <template #modal-footer="{ ok, cancel, hide }">
+        <button
+          type="button"
+          class="btn btn-square btn-light-primary font-weight-bold"
+          @click="hide()"
+        >
+          Cancel
+        </button>
+
+        <button
+          id="btnSubmit"
+          type="button"
+          @click="$refs.submitModal.click()"
+          :class="[
+            'btn btn-square font-weight-bold',
+            approve && 'btn-light-success',
+            !approve && 'btn-light-danger'
+          ]"
+        >
+          Handle
+        </button>
+      </template>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import { handleLitigation } from "@/graphql/litigation-mutations";
 
 export default {
   name: "ServicePurchaseView",
-  props: ["servicePurchase", "canBeHandled"],
+  props: ["servicePurchase", "canBeHandled", "litigation"],
+  data() {
+    return {
+      handleReason: null,
+      approve: false
+    };
+  },
   computed: {
     ...mapGetters(["currency", "basePrice"]),
     hasOptions() {
@@ -147,10 +207,50 @@ export default {
     }
   },
   methods: {
-    async approvePurchase() {},
-    async cancelPurchase() {}
+    approvePurchase() {
+      this.approve = true;
+      this.$refs.handleModal.show();
+    },
+    cancelPurchase() {
+      this.approve = false;
+      this.$refs.handleModal.show();
+    },
+    async handle(e) {
+      e.preventDefault();
+
+      const submitButton = window.$("#btnSubmit");
+      submitButton.attr("disabled", true);
+      submitButton.addClass("spinner spinner-light spinner-right");
+
+      let decision = "CANCELED";
+      if (this.approve) {
+        decision = "APPROVED";
+      }
+
+      let result = await this.$apollo.mutate({
+        mutation: handleLitigation,
+        variables: {
+          input: {
+            id: this.$route.params.id,
+            decision: decision,
+            reason: this.handleReason
+          }
+        }
+      });
+
+      submitButton.removeAttr("disabled");
+      submitButton.removeClass("spinner spinner-light spinner-right");
+
+      if (!window._.isEmpty(result.data.handleLitigation.errors)) {
+        return;
+      }
+
+      this.$refs.handleModal.hide();
+
+      this.$emit("litigation-handled", result.data.handleLitigation.litigation);
+
+      this.notifySuccess("Litigation handled successfully.");
+    }
   }
 };
 </script>
-
-<style scoped></style>

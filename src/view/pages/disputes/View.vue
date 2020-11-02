@@ -48,8 +48,10 @@
         <!--end::Card-->
 
         <service-purchase-view
+          v-on:litigation-handled="litigationHandled"
           :service-purchase="servicePurchase"
           :can-be-handled="litigation.canBeHandled"
+          :litigation="litigation"
         />
 
         <chat-history :chat-history="chatHistory" />
@@ -148,6 +150,10 @@ export default {
       if (window._.isEmpty(result.errors)) {
         this.chatHistory = result.data.litigation.servicePurchase.chatHistory;
       }
+    },
+    litigationHandled(litigation) {
+      this.litigation = litigation;
+      this.fetchLitigationServicePurchaseTimelines();
     }
   }
 };

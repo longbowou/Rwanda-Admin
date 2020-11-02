@@ -15,6 +15,7 @@ export const servicePurchaseFields = gql`
     delivered
     approved
     inDispute
+    canceled
     updateInitiated
     updateAccepted
     updateRefused

@@ -12,5 +12,6 @@ export const litigationFields = gql`
     handled
     approved
     canceled
+    reason
   }
 `;

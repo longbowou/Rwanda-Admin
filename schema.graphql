@@ -190,6 +190,7 @@ type LitigationType {
     handled: Boolean!
     id: UUID!
     opened: Boolean!
+    reason: String
     servicePurchase: ServicePurchaseType!
     status: String!
     title: String!
@@ -454,9 +455,9 @@ input CreateServiceCategoryInput {
 }
 
 input HandleLitigationInput {
-    admin: UUID!
-    decision: String
+    decision: String!
     id: UUID!
+    reason: String!
 }
 
 input LoginInput {
