@@ -51,6 +51,8 @@
           :service-purchase="servicePurchase"
           :can-be-handled="litigation.canBeHandled"
         />
+
+        <chat-history :chat-history="chatHistory" />
       </div>
 
       <div class="col-md-4">
@@ -65,27 +67,33 @@
 import {
   queryLitigation,
   queryLitigationServicePurchase,
+  queryLitigationServicePurchaseChatHistory,
   queryLitigationServicePurchaseTimelines
 } from "@/graphql/litigation-queries";
 import Timeline from "@/view/pages/service-purchases/Timeline";
+import ChatHistory from "@/view/pages/service-purchases/ChatHistory";
 import ServicePurchaseView from "@/view/pages/service-purchases/View";
+import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
 
 export default {
   name: "LitigationView",
-  components: { ServicePurchaseView, Timeline },
-  comments: { Timeline, ServicePurchaseView },
+  components: { ChatHistory, ServicePurchaseView, Timeline },
+  comments: { Timeline, ServicePurchaseView, ChatHistory },
   data() {
     return {
       datatable: {},
       litigation: {},
       servicePurchase: {},
-      timelines: {}
+      timelines: {},
+      chatHistory: []
     };
   },
   beforeMount() {
     this.fetchLitigation();
     this.fetchLitigationServicePurchase();
     this.fetchLitigationServicePurchaseTimelines();
+    this.fetchLitigationServicePurchaseChatHistory();
   },
   methods: {
     async fetchLitigation() {
@@ -97,6 +105,12 @@ export default {
       });
       if (window._.isEmpty(result.errors)) {
         this.litigation = result.data.litigation;
+
+        this.$store.dispatch(SET_BREADCRUMB, [
+          { title: "Disputes", route: { name: "disputes" } },
+          { title: this.litigation.title }
+        ]);
+        this.$store.dispatch(SET_HEAD_TITLE, this.litigation.title);
       }
     },
     async fetchLitigationServicePurchase() {
@@ -121,6 +135,18 @@ export default {
 
       if (window._.isEmpty(result.errors)) {
         this.timelines = result.data.litigation.servicePurchase.timelines;
+      }
+    },
+    async fetchLitigationServicePurchaseChatHistory() {
+      const result = await this.$apollo.query({
+        query: queryLitigationServicePurchaseChatHistory,
+        variables: {
+          id: this.$route.params.id
+        }
+      });
+
+      if (window._.isEmpty(result.errors)) {
+        this.chatHistory = result.data.litigation.servicePurchase.chatHistory;
       }
     }
   }

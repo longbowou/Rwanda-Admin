@@ -25,7 +25,8 @@ export default new Router({
         {
           path: "/disputes/:id",
           name: "disputes-view",
-          component: () => import("@/view/pages/disputes/View")
+          component: () => import("@/view/pages/disputes/View"),
+          meta: { requiresAuth: true }
         }
       ]
     },

@@ -6,6 +6,7 @@ export const servicePurchaseFields = gql`
     id
     number
     price
+    basePrice
     status
     delay
     initiated
@@ -45,4 +46,31 @@ export const servicePurchaseTimelineFields = gql`
       description
     }
   }
+`;
+
+export const servicePurchaseChatMessageFields = gql`
+  fragment servicePurchaseChatMessageFields on ServicePurchaseChatMessageType {
+    id
+    isFile
+    fileName
+    fileUrl
+    fileSize
+    content
+    marked
+    fromBuyer
+    time
+    showDate
+    date
+    dateDisplay
+    createdAt
+  }
+`;
+
+export const servicePurchaseChatHistoryFields = gql`
+  fragment servicePurchaseChatHistoryFields on ServicePurchaseType {
+    chatHistory {
+      ...servicePurchaseChatMessageFields
+    }
+  }
+  ${servicePurchaseChatMessageFields}
 `;

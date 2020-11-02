@@ -71,7 +71,7 @@
             {{ servicePurchase.service ? servicePurchase.service.title : null }}
           </h3>
           <h3 class="col-sm-3 text-primary font-weight-bold text-right">
-            {{ basePrice }} {{ currency }}
+            {{ servicePurchase.basePrice }} {{ currency }}
           </h3>
         </div>
 
@@ -115,10 +115,6 @@
             <h5 class="font-weight-bold">
               {{ servicePurchase.price }} {{ currency }}
             </h5>
-            <p class="font-weight-boldest text-success mb-0">
-              Paid with Wallet <br />
-              <i class="ml-2 icon-lg text-success flaticon2-correct" />
-            </p>
           </div>
         </div>
       </div>
