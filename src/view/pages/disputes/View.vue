@@ -58,6 +58,25 @@
       </div>
 
       <div class="col-md-4">
+        <div
+          v-if="litigation.handled"
+          class="alert alert-custom alert-notice alert-secondary fade show m-0 mb-5"
+          role="alert"
+        >
+          <div class="alert-icon">
+            <span
+              class="svg-icon svg-icon-lg svg-icon-3x svg-icon-secondary mr-3"
+            >
+              <!--begin::Svg Icon-->
+              <inline-svg src="media/svg/icons/Code/Info-circle.svg" />
+              <!--end::Svg Icon-->
+            </span>
+          </div>
+          <div class="alert-text text-justify font-weight-bold">
+            <strong>Reason :</strong> {{ litigation.reason }}<br />
+          </div>
+        </div>
+
         <timeline :timelines="timelines" />
       </div>
     </div>
@@ -153,6 +172,7 @@ export default {
     },
     litigationHandled(litigation) {
       this.litigation = litigation;
+      this.fetchLitigationServicePurchase();
       this.fetchLitigationServicePurchaseTimelines();
     }
   }

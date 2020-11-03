@@ -2,6 +2,7 @@ import JwtService from "@/core/services/jwt.service";
 import { queryAdmin } from "@/graphql/admin-queries";
 import { apolloClient } from "@/vue-apollo";
 import _ from "lodash";
+import store from "@/core/services/store/index";
 
 // action types
 export const LOGIN = "login";
@@ -17,7 +18,7 @@ const currentAuth = JwtService.getAuth();
 const isAuthenticated = currentAuth !== null;
 if (isAuthenticated) {
   apolloClient.query({ query: queryAdmin }).then(result => {
-    state.admin = result.data.admin;
+    store.dispatch(UPDATE_USER, { admin: result.data.admin });
   });
 }
 
