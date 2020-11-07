@@ -75,3 +75,12 @@ export const servicePurchaseChatHistoryFields = gql`
   }
   ${servicePurchaseChatMessageFields}
 `;
+
+export const servicePurchaseChatFilesHistoryFields = gql`
+  fragment servicePurchaseChatFilesHistoryFields on ServicePurchaseType {
+    chatFilesHistory {
+      ...servicePurchaseChatMessageFields
+    }
+  }
+  ${servicePurchaseChatMessageFields}
+`;

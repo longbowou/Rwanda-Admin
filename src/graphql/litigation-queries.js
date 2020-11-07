@@ -1,6 +1,7 @@
 import gql from "graphql-tag";
 import { litigationFields } from "@/graphql/fragments/litigation";
 import {
+  servicePurchaseChatFilesHistoryFields,
   servicePurchaseChatHistoryFields,
   servicePurchaseFields,
   servicePurchaseTimelineFields
@@ -46,4 +47,15 @@ export const queryLitigationServicePurchaseChatHistory = gql`
     }
   }
   ${servicePurchaseChatHistoryFields}
+`;
+
+export const queryLitigationServicePurchaseChatFilesHistory = gql`
+  query queryLitigationServicePurchase($id: UUID!) {
+    litigation(id: $id) {
+      servicePurchase {
+        ...servicePurchaseChatFilesHistoryFields
+      }
+    }
+  }
+  ${servicePurchaseChatFilesHistoryFields}
 `;

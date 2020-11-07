@@ -32,6 +32,7 @@ type AccountType implements UserInterface {
     litigationSet: [LitigationType!]!
     operationSet: [OperationType!]!
     ordersCount: String!
+    paymentSet: [PaymentType!]!
     purchasesCount: String!
     refundSet: [RefundType!]!
     refundsSum: String!
@@ -39,7 +40,6 @@ type AccountType implements UserInterface {
     servicecommentSet: [ServiceCommentType!]!
     servicepurchaseSet: [ServicePurchaseType!]!
     servicesCount: String!
-    updatedAt: DateTime!
     username: String!
 }
 
@@ -79,7 +79,6 @@ type AdminType implements UserInterface {
     lastLogin: String
     lastName: String
     litigationSet: [LitigationType!]!
-    updatedAt: DateTime!
     username: String!
 }
 
@@ -105,7 +104,6 @@ type ChatMessageType {
     id: UUID!
     isFile: Boolean!
     servicePurchase: ServicePurchaseType!
-    updatedAt: DateTime!
 }
 
 type CreateAdmin {
@@ -133,7 +131,6 @@ type DeliverableFileType {
     id: UUID!
     name: String!
     size: Int!
-    updatedAt: DateTime!
 }
 
 type DeliverableType {
@@ -146,7 +143,6 @@ type DeliverableType {
     published: Boolean!
     servicePurchase: ServicePurchaseType!
     title: String!
-    updatedAt: DateTime!
     version: String!
     versionDisplay: String!
 }
@@ -156,7 +152,7 @@ type DepositType {
     amount: Int!
     createdAt: DateTime!
     id: UUID!
-    updatedAt: DateTime!
+    payment: PaymentType
 }
 
 type ErrorType {
@@ -170,7 +166,6 @@ type FundType {
     id: UUID!
     label: String!
     operationSet: [OperationType!]!
-    updatedAt: DateTime!
 }
 
 type HandleLitigation {
@@ -188,13 +183,13 @@ type LitigationType {
     createdAt: DateTime!
     decision: String
     handled: Boolean!
+    handledAt: DateTime
     id: UUID!
     opened: Boolean!
     reason: String
     servicePurchase: ServicePurchaseType!
     status: String!
     title: String!
-    updatedAt: DateTime!
 }
 
 type LoginAdmin {
@@ -212,12 +207,29 @@ type OperationType {
     id: UUID!
     servicePurchase: ServicePurchaseType
     type: String!
-    updatedAt: DateTime!
 }
 
 type ParametersType {
     basePrice: String!
     currency: String!
+}
+
+type PaymentType {
+    account: AccountType!
+    amount: Int!
+    canceled: Boolean!
+    celPhoneNum: String
+    confirmed: Boolean!
+    cpmPayid: String
+    cpmPhonePrefixe: String
+    cpmResult: String
+    cpmTransStatus: String
+    createdAt: DateTime!
+    depositSet: [DepositType!]!
+    id: UUID!
+    paymentMethod: String
+    signature: String
+    status: String!
 }
 
 type RefundType {
@@ -226,7 +238,7 @@ type RefundType {
     createdAt: DateTime!
     id: UUID!
     phoneNumber: String
-    updatedAt: DateTime!
+    status: String!
 }
 
 type ServiceCategoryType {
@@ -235,7 +247,6 @@ type ServiceCategoryType {
     id: UUID!
     label: String!
     serviceSet: [ServiceType!]!
-    updatedAt: DateTime!
 }
 
 type ServiceCommentType {
@@ -248,7 +259,6 @@ type ServiceCommentType {
     replyContent: String
     servicePurchase: ServicePurchaseType
     type: String
-    updatedAt: DateTime!
 }
 
 type ServiceMediaType {
@@ -257,7 +267,6 @@ type ServiceMediaType {
     id: UUID!
     isMain: Boolean!
     service: ServiceType!
-    updatedAt: DateTime!
     url: String
 }
 
@@ -276,7 +285,6 @@ type ServiceOptionType {
     service: ServiceType!
     servicepurchaseSet: [ServicePurchaseType!]!
     servicepurchaseserviceoptionSet: [ServicePurchaseServiceOptionType!]!
-    updatedAt: DateTime!
 }
 
 type ServicePurchaseChatMessageType {
@@ -301,7 +309,6 @@ type ServicePurchaseServiceOptionType {
     id: UUID!
     serviceOption: ServiceOptionType!
     servicePurchase: ServicePurchaseType!
-    updatedAt: DateTime!
 }
 
 type ServicePurchaseTimeLineType {
@@ -326,10 +333,12 @@ type ServicePurchaseType {
     canBeCommented: Boolean!
     canBeDelivered: Boolean!
     canBeInDispute: Boolean!
+    canChat: Boolean!
     canceled: Boolean!
     canceledAt: DateTime
     chat: [ServicePurchaseChatMessageType]!
     chatFiles: [ServicePurchaseChatMessageType]!
+    chatFilesHistory: [ServicePurchaseChatMessageType]!
     chatHistory: [ServicePurchaseChatMessageType]!
     chatMarked: [ServicePurchaseChatMessageType]!
     chatmessageSet: [ChatMessageType!]!
@@ -364,7 +373,6 @@ type ServicePurchaseType {
     updateInitiated: Boolean!
     updateRefused: Boolean!
     updateRequest: ServicePurchaseUpdateRequestType
-    updatedAt: DateTime!
 }
 
 type ServicePurchaseUpdateRequestType {
@@ -396,6 +404,8 @@ type ServiceType {
     createdAt: String!
     delay: Int!
     delayDisplay: String!
+    file: String
+    fileUrl: String
     id: UUID!
     keywords: String
     options: [ServiceOptionType]!
@@ -409,7 +419,6 @@ type ServiceType {
     servicepurchaseSet: [ServicePurchaseType!]!
     stars: Int!
     title: String!
-    updatedAt: DateTime!
 }
 
 type UpdateAdmin {

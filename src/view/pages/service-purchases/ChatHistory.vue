@@ -8,82 +8,102 @@
           <!--end::Svg Icon-->
         </span>
         <h3 class="card-label">
-          Chat History
+          {{ $t("Chat History") }}
         </h3>
       </div>
     </div>
 
-    <div class="card-body">
-      <!--begin::Example-->
-      <div class="example example-basic">
-        <div class="example-preview">
-          <div class="timeline timeline-4">
-            <div class="timeline-bar"></div>
-            <div class="timeline-items">
-              <template v-for="message of chatHistory">
-                <div
-                  :key="message.id"
-                  :class="[
-                    'timeline-item',
-                    message.fromBuyer && 'timeline-item-left',
-                    !message.fromBuyer && 'timeline-item-right'
-                  ]"
-                >
-                  <div class="timeline-badge">
-                    <div
-                      :class="[
-                        message.fromBuyer && 'bg-success',
-                        !message.fromBuyer && 'bg-warning'
-                      ]"
-                    ></div>
-                  </div>
+    <div class="card-body pt-0">
+      <ul class="nav nav-tabs nav-tabs-line-success nav-bold nav-tabs-line">
+        <li class="nav-item nav-primary">
+          <button
+            @click="setActiveTab(0)"
+            :class="['nav-link', isMessagesTabActive && 'active']"
+            data-toggle="tab"
+            role="tab"
+          >
+            <span class="nav-icon"><i class="flaticon2-chat-1"></i></span>
+            <span class="nav-text">{{ $t("Messages") }}</span>
+          </button>
+        </li>
+        <li class="nav-item ">
+          <button
+            @click="setActiveTab(1)"
+            :class="['nav-link', isFilesTabActive && 'active']"
+            data-toggle="tab"
+            role="tab"
+          >
+            <span class="nav-icon"><i class="fas fa-file-alt"></i></span>
+            <span class="nav-text">{{ $t("Files") }}</span>
+          </button>
+        </li>
+      </ul>
 
-                  <div class="timeline-label mt-2">
-                    <span class="text-primary font-weight-bold">
-                      {{ message.showDate ? message.dateDisplay : "" }}
-                    </span>
-                  </div>
+      <div class="tab-content">
+        <div
+          :class="['tab-pane fade', isMessagesTabActive && 'show active']"
+          role="tabpanel"
+        >
+          <chat-timeline :messages="chatHistory" />
+        </div>
 
-                  <div class="timeline-content mb-5">
-                    <div v-html="message.content" v-if="!message.isFile"></div>
-
-                    <div
-                      @click="downloadFile(message.fileName, message.fileUrl)"
-                      v-if="message.isFile"
-                      class="text-hover-success cursor-pointer"
-                    >
-                      <i class="fas fa-file-download mr-1"></i>
-                      {{ message.fileName }} <br />
-                      <p :class="['m-0']">
-                        <span>{{ message.fileSize }}</span>
-                      </p>
-                    </div>
-
-                    <span class="text-muted font-weight-bold font-size-sm">{{
-                      message.time
-                    }}</span>
-                  </div>
-                </div>
-              </template>
-              <div></div>
-            </div>
-          </div>
+        <div
+          :class="['tab-pane fade', isFilesTabActive && 'show active']"
+          role="tabpanel"
+        >
+          <chat-timeline :messages="chatFilesHistory" />
         </div>
       </div>
-      <!--end::Example-->
     </div>
   </div>
 </template>
 
 <script>
-import FileSaver from "file-saver";
-
+import ChatTimeline from "@/view/pages/service-purchases/ChatTimeline";
+import { queryLitigationServicePurchaseChatFilesHistory } from "@/graphql/litigation-queries";
 export default {
   name: "ChatHistory",
+  components: { ChatTimeline },
   props: ["chatHistory"],
+  data() {
+    return {
+      chatFilesHistory: [],
+      currentTabIndex: 0
+    };
+  },
+  computed: {
+    isMessagesTabActive() {
+      return this.currentTabIndex === 0;
+    },
+    isFilesTabActive() {
+      return this.currentTabIndex === 1;
+    }
+  },
+  watch: {
+    isFilesTabActive() {
+      if (this.isFilesTabActive) {
+        if (window._.isEmpty(this.chatFilesHistory)) {
+          this.fetchChatFilesHistory();
+        }
+      }
+    }
+  },
   methods: {
-    downloadFile(fileName, filUrl) {
-      FileSaver.saveAs(filUrl, fileName);
+    setActiveTab(index) {
+      this.currentTabIndex = index;
+    },
+    async fetchChatFilesHistory() {
+      const result = await this.$apollo.query({
+        query: queryLitigationServicePurchaseChatFilesHistory,
+        variables: {
+          id: this.$route.params.id
+        }
+      });
+
+      if (window._.isEmpty(result.errors)) {
+        this.chatFilesHistory =
+          result.data.litigation.servicePurchase.chatFilesHistory;
+      }
     }
   }
 };
