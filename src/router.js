@@ -26,7 +26,26 @@ export default new Router({
           path: "/disputes/:id",
           name: "disputes-view",
           component: () => import("@/view/pages/disputes/View")
-        }
+        },
+        {
+          path: "/categories",
+          name: "categories",
+          component: () => import("@/view/pages/categories/Datatable"),
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/category-create",
+          name: "category-create",
+          component: () => import("@/view/pages/categories/Create"),
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/services",
+          name: "services",
+          component: () => import("@/view/pages/services/Datatable"),
+          meta: { requiresAuth: true }
+        },
+
       ]
     },
     {

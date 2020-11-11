@@ -44,6 +44,56 @@
         </a>
       </li>
     </router-link>
+
+    <router-link
+        :to="{ name: 'categories' }"
+        v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+          aria-haspopup="true"
+          data-menu-toggle="hover"
+          class="menu-item"
+          :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <!--          <i class=" flaticon2-expand"></i>-->
+          <span class="menu-icon svg-icon svg-icon-lg svg-icon-2x">
+            <!--begin::Svg Icon-->
+            <inline-svg src="media/svg/icons/Code/Github.svg" />
+            <!--end::Svg Icon-->
+          </span>
+          <span class="menu-text">Service Categories</span>
+        </a>
+      </li>
+    </router-link>
+
+    <router-link
+        :to="{ name: 'services' }"
+        v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+          aria-haspopup="true"
+          data-menu-toggle="hover"
+          class="menu-item"
+          :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <!--          <i class=" flaticon2-expand"></i>-->
+          <span class="menu-icon svg-icon svg-icon-lg svg-icon-2x">
+            <!--begin::Svg Icon-->
+            <inline-svg src="media/svg/icons/Code/Github.svg" />
+            <!--end::Svg Icon-->
+          </span>
+          <span class="menu-text">Services</span>
+        </a>
+      </li>
+    </router-link>
   </ul>
 </template>
 
