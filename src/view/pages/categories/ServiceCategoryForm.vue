@@ -20,7 +20,13 @@
 
     <div class="form-group">
       <label class="col-sm-12 col-form-label font-weight-bold">Description</label>
-      <div id="content" style="height: 200px" v-html="contentHtml"></div>
+      <b-form-input
+          v-model="input.description"
+          class="form-control form-control-lg form-control-solid"
+          type="text"
+          placeholder="Description"
+          min="0"
+      />
     </div>
 
     <br />
@@ -40,11 +46,11 @@
 <script>
 import { formMixin, toastMixin } from "@/view/mixins";
 import { createServiceCategory, updateServiceCategory } from "@/graphql/service-mutations";
-import Quill from "quill";
+
 import {
   queryServiceCategoryForEdit
 } from "@/graphql/service-queries";
-import { UPDATE_USER } from "@/core/services/store/modules/auth.module";
+import { UPDATE_USER } from "@/core/services/store/auth.module";
 
 export default {
   name: "ServiceCategoryForm",
@@ -54,8 +60,7 @@ export default {
     return {
       serviceCategory: {},
       input: {},
-      contentHtml: "",
-      contentQuill: {},
+
     };
   },
   computed: {
@@ -85,7 +90,6 @@ export default {
       submitButton.addClass("disabled spinner spinner-light spinner-right");
 
       this.errors = [];
-      this.input.content = this.contentQuill.root.innerHTML;
 
       let mutation = createServiceCategory;
       if (this.updating) {
@@ -145,20 +149,13 @@ export default {
 
         this.input.id = this.serviceCategory.id;
         this.input.label = this.serviceCategory.title;
-        this.contentHtml = this.serviceCategory.description;
+        this.input.description = this.serviceCategory.description;
 
         await this.$forceUpdate();
         this.initPlugins();
       }
     },
     initPlugins() {
-      this.contentQuill = new Quill("#content", {
-        modules: {
-          toolbar: true
-        },
-        placeholder: "Content",
-        theme: "snow"
-      });
 
     }
   },

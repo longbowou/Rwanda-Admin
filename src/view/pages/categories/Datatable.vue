@@ -8,7 +8,7 @@
           <div class="card-header">
             <div class="card-title">
               <span
-                  class="svg-icon svg-icon-lg svg-icon-3x svg-icon-primary mr-3"
+                class="svg-icon svg-icon-lg svg-icon-3x svg-icon-primary mr-3"
               >
                 <!--begin::Svg Icon-->
                 <inline-svg src="media/svg/icons/Shopping/Box2.svg" />
@@ -18,13 +18,13 @@
             </div>
             <div class="card-toolbar">
               <router-link
-                  :to="{ name: 'category-create' }"
-                  v-slot="{ href, navigate, isActive, isExactActive }"
+                :to="{ name: 'category-create' }"
+                v-slot="{ href, navigate, isActive, isExactActive }"
               >
                 <a
-                    :href="href"
-                    class="btn btn-primary font-weight-bolder"
-                    @click="navigate"
+                  :href="href"
+                  class="btn btn-primary font-weight-bolder"
+                  @click="navigate"
                 >
                   <span class="svg-icon svg-icon-md">
                     <inline-svg src="media/svg/icons/Design/Flatten.svg" />
@@ -38,24 +38,24 @@
             <div class="row justify-content-center">
               <div class="col-sm-12">
                 <table
-                    class="table table-hover dataTable dtr-inline text-center"
-                    id="categories-dataTable"
+                  class="table table-hover dataTable dtr-inline text-center"
+                  id="categories-dataTable"
                 >
                   <thead>
-                  <tr>
-                    <th style="width: 30%">Label</th>
-                    <th>Description</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
-                  </tr>
+                    <tr>
+                      <th style="width: 30%">Label</th>
+                      <th>Description</th>
+                      <th>Created At</th>
+                      <th>Actions</th>
+                    </tr>
                   </thead>
                   <tfoot>
-                  <tr>
-                    <th>Label</th>
-                    <th>Description</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
-                  </tr>
+                    <tr>
+                      <th>Label</th>
+                      <th>Description</th>
+                      <th>Created At</th>
+                      <th>Actions</th>
+                    </tr>
                   </tfoot>
                 </table>
               </div>
@@ -73,14 +73,14 @@
 </style>
 
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/modules/breadcrumbs.module";
-import { SET_HEAD_TITLE } from "@/core/services/store/modules/htmlhead.module";
+import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
 import { mapGetters } from "vuex";
 import "@/assets/plugins/datatable/datatables.bundle";
-import {serviceCategoriesUrl} from "@/core/server-side/urls";
+import { serviceCategoriesUrl } from "@/core/server-side/urls";
 import JwtService from "@/core/services/jwt.service";
 import i18nService from "@/core/services/i18n.service";
-import {deleteServiceCategory} from "@/graphql/service-mutations";
+
 import { toastMixin } from "@/view/mixins";
 
 export default {
@@ -113,15 +113,8 @@ export default {
           render: function(data) {
             const buttons = [];
 
-            const showRouter = $this.$router.resolve({
-              name: "",
-              params: { id: data.id }
-            });
-            const showBtn = `<a href="${showRouter.href}" class="btn btn-sm btn-clean btn-icon btn-hover-icon-dark btn-square btn-icon-sm" title="Show"><i class="flaticon-eye"></i></a>`;
-            buttons.push(showBtn);
-
             const editRouter = $this.$router.resolve({
-              name: "",
+              name: "category-edit",
               params: { id: data.id }
             });
             const editBtn = `<a href="${editRouter.href}" class="btn btn-sm btn-clean btn-icon btn-hover-icon-success btn-square btn-icon-sm" title="Edit"><i class="fa fa-edit"></i></a>`;
@@ -150,9 +143,9 @@ export default {
 
     window.$("#categories-dataTable").on("click", ".btn-delete", function() {
       $this.deleteServiceCategory(
-          window.$(this)[0].dataset.id,
-          window.$(this)[0].dataset.label,
-          window.$(this)[0]
+        window.$(this)[0].dataset.id,
+        window.$(this)[0].dataset.label,
+        window.$(this)[0]
       );
     });
   },
@@ -174,8 +167,8 @@ export default {
         }
 
         window
-            .$(btn)
-            .removeClass("disabled spinner spinner-danger spinner-right");
+          .$(btn)
+          .removeClass("disabled spinner spinner-danger spinner-right");
       } else {
         btn.blur();
       }

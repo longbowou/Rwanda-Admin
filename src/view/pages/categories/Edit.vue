@@ -12,12 +12,12 @@
                 <inline-svg src="media/svg/icons/Shopping/Box2.svg" />
                 <!--end::Svg Icon-->
               </span>
-              <h3 class="card-label">Add a Service Category</h3>
+              <h3 class="card-label">Update a Service Category</h3>
             </div>
             <div class="card-toolbar">
               <button
-                @click="$router.push({ name: 'categories' })"
-                class="btn btn-light-dark font-weight-bolder mr-2"
+                  @click="$router.push({ name: 'categories' })"
+                  class="btn btn-light-dark font-weight-bolder mr-2"
               >
                 <i class="ki ki-long-arrow-back icon-lg"></i>
                 Back
@@ -26,7 +26,7 @@
           </div>
           <div class="card-body">
             <div class="row justify-content-center">
-              <service-category-form />
+              <service-category-form :service-category-id="$route.params.id" />
             </div>
           </div>
         </div>
@@ -43,15 +43,15 @@ import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
 import ServiceCategoryForm from "./ServiceCategoryForm";
 
 export default {
-  name: "ServiceCategoryCreate",
+  name: "ServiceCategoryEdit",
   components: { ServiceCategoryForm },
   data() {
     return {};
   },
   computed: {},
   mounted() {
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "Add a Service Category" }]);
-    this.$store.dispatch(SET_HEAD_TITLE, "Add a Service Category");
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: "Update a Service Category" }]);
+    this.$store.dispatch(SET_HEAD_TITLE, "Update a Service Category");
   },
   methods: {}
 };

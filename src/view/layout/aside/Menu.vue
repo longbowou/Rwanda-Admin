@@ -62,7 +62,7 @@
           <!--          <i class=" flaticon2-expand"></i>-->
           <span class="menu-icon svg-icon svg-icon-lg svg-icon-2x">
             <!--begin::Svg Icon-->
-            <inline-svg src="media/svg/icons/Code/Github.svg" />
+            <inline-svg src="media/svg/icons/Code/Git2.svg" />
             <!--end::Svg Icon-->
           </span>
           <span class="menu-text">Service Categories</span>
@@ -87,7 +87,7 @@
           <!--          <i class=" flaticon2-expand"></i>-->
           <span class="menu-icon svg-icon svg-icon-lg svg-icon-2x">
             <!--begin::Svg Icon-->
-            <inline-svg src="media/svg/icons/Code/Github.svg" />
+            <inline-svg src="media/svg/icons/Code/Git4.svg" />
             <!--end::Svg Icon-->
           </span>
           <span class="menu-text">Services</span>

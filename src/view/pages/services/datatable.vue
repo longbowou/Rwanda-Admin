@@ -59,8 +59,8 @@
 </style>
 
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/modules/breadcrumbs.module";
-import { SET_HEAD_TITLE } from "@/core/services/store/modules/htmlhead.module";
+import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
 import { mapGetters } from "vuex";
 import "@/assets/plugins/datatable/datatables.bundle";
 import { AllservicesUrl } from "@/core/server-side/urls";
@@ -105,13 +105,6 @@ export default {
             });
             const showBtn = `<a href="${showRouter.href}" class="btn btn-sm btn-clean btn-icon btn-hover-icon-dark btn-square btn-icon-sm" title="Show"><i class="flaticon-eye"></i></a>`;
             buttons.push(showBtn);
-
-            const editRouter = $this.$router.resolve({
-              name: "user-services-edit",
-              params: { id: data.id }
-            });
-            const editBtn = `<a href="${editRouter.href}" class="btn btn-sm btn-clean btn-icon btn-hover-icon-success btn-square btn-icon-sm" title="Edit"><i class="fa fa-edit"></i></a>`;
-            buttons.push(editBtn);
 
             const deleteBtn = `<button class="btn btn-sm btn-clean btn-icon btn-icon-sm btn-hover-icon-danger btn-square btn-delete" title="Delete" data-id="${data.id}" data-title="${data.title}"><i class="fa fa-trash"></i></button>`;
             buttons.push(deleteBtn);
