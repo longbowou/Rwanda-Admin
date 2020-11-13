@@ -27,7 +27,33 @@ export default new Router({
           name: "disputes-view",
           component: () => import("@/view/pages/disputes/View"),
           meta: { requiresAuth: true }
-        }
+        },
+        {
+          path: "/categories",
+          name: "categories",
+          component: () => import("@/view/pages/categories/Datatable"),
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/categories/category-create",
+          name: "category-create",
+          component: () => import("@/view/pages/categories/Create"),
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/categories/:id/category-edit",
+          name: "category-edit",
+          component: () => import("@/view/pages/categories/Edit"),
+          meta: { requiresAuth: true }
+        },
+
+        {
+          path: "/services",
+          name: "services",
+          component: () => import("@/view/pages/services/datatable"),
+          meta: { requiresAuth: true }
+        },
+
       ]
     },
     {
