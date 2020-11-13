@@ -1,1 +1,1 @@
-export const BRAND = "MD TAF";
+export const BRAND = "MDTAF";
