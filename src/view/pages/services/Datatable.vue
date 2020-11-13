@@ -31,6 +31,7 @@
                       <th style="width: 30%">{{ $t("Title") }}</th>
                       <th style="width: 30%">{{ $t("Category") }}</th>
                       <th>{{ $t("Activated") }}</th>
+                      <th>{{ $t("User") }}</th>
                       <th>{{ $t("Created At") }}</th>
                       <th>Actions</th>
                     </tr>
@@ -40,6 +41,7 @@
                       <th style="width: 30%">{{ $t("Title") }}</th>
                       <th style="width: 30%">{{ $t("Category") }}</th>
                       <th>{{ $t("Activated") }}</th>
+                      <th>{{ $t("User") }}</th>
                       <th>{{ $t("Created At") }}</th>
                       <th>Actions</th>
                     </tr>
@@ -87,12 +89,12 @@ export default {
         [10, 50, 100, -1],
         [10, 50, 100, "All"]
       ],
-      order: [[3, "desc"]],
+      order: [[4, "desc"]],
       columnDefs: [
         {
           orderable: false,
           searchable: false,
-          targets: [4],
+          targets: [5],
           render: function(data) {
             const buttons = [];
 

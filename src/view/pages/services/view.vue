@@ -15,9 +15,24 @@
               <h3 class="card-label">{{ getTitle }}</h3>
             </div>
             <div class="card-toolbar">
+              <span
+                id="activate-switch"
+                class="switch switch-lg switch-outline switch-icon switch-success m-2 "
+              >
+                <label>
+                  <input
+                    v-model="service.activated"
+                    v-on:change="updateService"
+                    type="checkbox"
+                    name="select"
+                  />
+                  <span></span>
+                </label>
+              </span>
+
               <button
                 @click="$router.push({ name: 'services' })"
-                class="btn btn-light-dark font-weight-bolder mr-2"
+                class="btn btn-light-dark font-weight-bolder m-2"
               >
                 <i class="ki ki-long-arrow-back icon-lg"></i>
                 {{ $t("Back To Services") }}
@@ -116,9 +131,12 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
 import { queryServiceForView } from "@/graphql/service-queries";
 import ServiceOptions from "@/view/pages/services/options/Datatable";
+import { updateService } from "@/graphql/service-mutations";
+import { toastMixin } from "@/view/mixins";
 
 export default {
   name: "ServiceView",
+  mixins: [toastMixin],
   components: { ServiceOptions },
   comments: { ServiceOptions },
   data() {
@@ -157,6 +175,40 @@ export default {
         ]);
         await this.$store.dispatch(SET_HEAD_TITLE, this.getTitle);
       }
+    },
+    async updateService() {
+      const activateSwitch = window.$("#activate-switch");
+      if (this.service.activated) {
+        activateSwitch.addClass("spinner spinner-darker-success spinner-left");
+      } else {
+        activateSwitch.addClass("spinner spinner-darker-success spinner-right");
+      }
+
+      let result = await this.$apollo.mutate({
+        mutation: updateService,
+        variables: {
+          input: {
+            id: this.$route.params.id,
+            activated: this.service.activated
+          }
+        }
+      });
+
+      if (this.service.activated) {
+        activateSwitch.removeClass(
+          "spinner spinner-darker-success spinner-right"
+        );
+      } else {
+        activateSwitch.removeClass(
+          "spinner spinner-darker-success spinner-left"
+        );
+      }
+
+      if (!window._.isEmpty(result.data.updateService.errors)) {
+        return;
+      }
+
+      this.notifySuccess("Service updated successfully.");
     }
   }
 };

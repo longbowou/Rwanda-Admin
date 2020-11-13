@@ -9,6 +9,7 @@ export const queryServiceForView = gql`
       delayDisplay
       keywords
       createdAt
+      activated
       publishedDisplay
       serviceCategory {
         label

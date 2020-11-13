@@ -187,10 +187,12 @@
 <script>
 import { mapGetters } from "vuex";
 import { handleLitigation } from "@/graphql/litigation-mutations";
+import { toastMixin } from "@/view/mixins";
 
 export default {
   name: "ServicePurchaseView",
   props: ["servicePurchase", "canBeHandled", "litigation"],
+  mixins: [toastMixin],
   data() {
     return {
       handleReason: null,
