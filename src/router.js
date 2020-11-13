@@ -29,31 +29,35 @@ export default new Router({
           meta: { requiresAuth: true }
         },
         {
-          path: "/categories",
-          name: "categories",
-          component: () => import("@/view/pages/categories/Datatable"),
+          path: "/services/categories",
+          name: "services-categories",
+          component: () => import("@/view/pages/services/categories/Datatable"),
           meta: { requiresAuth: true }
         },
         {
-          path: "/categories/category-create",
-          name: "category-create",
-          component: () => import("@/view/pages/categories/Create"),
+          path: "/services/categories/create",
+          name: "services-categories-create",
+          component: () => import("@/view/pages/services/categories/Create"),
           meta: { requiresAuth: true }
         },
         {
-          path: "/categories/:id/category-edit",
-          name: "category-edit",
-          component: () => import("@/view/pages/categories/Edit"),
+          path: "/services/categories/:id/edit",
+          name: "services-categories-edit",
+          component: () => import("@/view/pages/services/categories/Edit"),
           meta: { requiresAuth: true }
         },
-
         {
           path: "/services",
           name: "services",
-          component: () => import("@/view/pages/services/datatable"),
+          component: () => import("@/view/pages/services/Datatable"),
           meta: { requiresAuth: true }
         },
-
+        {
+          path: "/services/:id",
+          name: "services-view",
+          component: () => import("@/view/pages/services/view"),
+          meta: { requiresAuth: true }
+        }
       ]
     },
     {

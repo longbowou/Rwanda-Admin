@@ -16,13 +16,12 @@
             </div>
             <div class="card-toolbar">
               <button
-                  @click="$router.push({ name: 'services' })"
-                  class="btn btn-light-dark font-weight-bolder mr-2"
+                @click="$router.push({ name: 'services' })"
+                class="btn btn-light-dark font-weight-bolder mr-2"
               >
                 <i class="ki ki-long-arrow-back icon-lg"></i>
-                Back
+                {{ $t("Back To Services") }}
               </button>
-
             </div>
           </div>
           <div class="card-body">
@@ -31,43 +30,45 @@
               <div class="col-sm-4">
                 <div class="form-group row">
                   <label class="col-form-label col-4 text-lg-right text-left"
-                  >Category</label
+                    >Category</label
                   >
                   <div class="col-8">
-                    <span class="form-control-plaintext font-weight-bold">{{
+                    <span class="form-control-plaintext font-weight-bold">
+                      {{
                         service.serviceCategory
-                            ? service.serviceCategory.label
-                            : null
-                      }}</span>
+                          ? service.serviceCategory.label
+                          : null
+                      }}
+                    </span>
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-form-label col-4 text-lg-right text-left"
-                  >Delivery Delay</label
-                  >
+                  <label class="col-form-label col-4 text-lg-right text-left">
+                    {{ $t("Delivery Delay") }}
+                  </label>
                   <div class="col-8">
-                    <span class="form-control-plaintext font-weight-bold">{{
-                        service.delayDisplay
-                      }}</span>
+                    <span class="form-control-plaintext font-weight-bold">
+                      {{ service.delayDisplay }}
+                    </span>
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-form-label col-4 text-lg-right text-left"
-                  >Keywords</label
-                  >
+                  <label class="col-form-label col-4 text-lg-right text-left">
+                    {{ $t("Keywords") }}
+                  </label>
                   <div class="col-8">
                     <span
-                        class="form-control-plaintext font-weight-bold"
-                        v-if="service.keywords"
+                      class="form-control-plaintext font-weight-bold"
+                      v-if="service.keywords"
                     >
                       <template
-                          v-for="(keyword, index) of service.keywords.split(',')"
+                        v-for="(keyword, index) of service.keywords.split(',')"
                       >
                         <span
-                            :key="index"
-                            class="ml-3 label label-xl font-weight-bold label-inline label-square mb-2"
+                          :key="index"
+                          class="ml-3 label label-xl font-weight-bold label-inline label-square mb-2"
                         >
                           {{ keyword }}
                         </span>
@@ -77,24 +78,24 @@
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-form-label col-4 text-lg-right text-left"
-                  >Published</label
-                  >
+                  <label class="col-form-label col-4 text-lg-right text-left">
+                    {{ $t("Published") }}
+                  </label>
                   <div class="col-8">
-                    <span class="form-control-plaintext font-weight-bold">{{
-                        service.publishedDisplay
-                      }}</span>
+                    <span class="form-control-plaintext font-weight-bold">
+                      {{ service.publishedDisplay }}
+                    </span>
                   </div>
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-form-label col-4 text-lg-right text-left"
-                  >Created at</label
-                  >
+                  <label class="col-form-label col-4 text-lg-right text-left">
+                    {{ $t("Created at") }}
+                  </label>
                   <div class="col-8">
-                    <span class="form-control-plaintext font-weight-bold">{{
-                        service.createdAt
-                      }}</span>
+                    <span class="form-control-plaintext font-weight-bold">
+                      {{ service.createdAt }}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -111,8 +112,8 @@
 </template>
 
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/modules/breadcrumbs.module";
-import { SET_HEAD_TITLE } from "@/core/services/store/modules/htmlhead.module";
+import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
 import { queryServiceForView } from "@/graphql/service-queries";
 import ServiceOptions from "@/view/pages/services/options/Datatable";
 
@@ -150,8 +151,11 @@ export default {
       if (window._.isEmpty(result.errors)) {
         this.service = result.data.service;
 
-        this.$store.dispatch(SET_BREADCRUMB, [{ title: this.getTitle }]);
-        this.$store.dispatch(SET_HEAD_TITLE, this.getTitle);
+        await this.$store.dispatch(SET_BREADCRUMB, [
+          { title: this.$t("Services"), route: { name: "services" } },
+          { title: this.getTitle }
+        ]);
+        await this.$store.dispatch(SET_HEAD_TITLE, this.getTitle);
       }
     }
   }

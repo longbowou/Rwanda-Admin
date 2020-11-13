@@ -47,7 +47,7 @@ export const toastMixin = {
           "</svg>" +
           "</span>" +
           "</div>" +
-          '<div class="alert-text">' +
+          '<div class="alert-text mr-3">' +
           '<span data-notify="title" class="font-weight-bolder">{1}</span>' +
           '<span data-notify="message" class="font-weight-bold mt-6">{2}</span>' +
           "</div>" +
