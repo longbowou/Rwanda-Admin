@@ -30,7 +30,7 @@
                     <tr>
                       <th style="width: 30%">{{ $t("Title") }}</th>
                       <th style="width: 30%">{{ $t("Category") }}</th>
-                      <th>{{ $t("Activated") }}</th>
+                      <th>{{ $t("Status") }}</th>
                       <th>{{ $t("User") }}</th>
                       <th>{{ $t("Created At") }}</th>
                       <th>Actions</th>

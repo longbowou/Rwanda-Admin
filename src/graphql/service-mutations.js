@@ -1,5 +1,6 @@
 import gql from "graphql-tag";
 import { errorFields } from "@/graphql/fragments/global";
+import { serviceForViewFields } from "@/graphql/fragments/service";
 
 export const createServiceCategory = gql`
   mutation($input: CreateServiceCategoryInput!) {
@@ -34,13 +35,32 @@ export const deleteServiceCategory = gql`
   ${errorFields}
 `;
 
-export const updateService = gql`
-  mutation($input: UpdateServiceInput!) {
-    updateService(input: $input) {
+export const acceptService = gql`
+  mutation($input: AcceptServiceInput!) {
+    acceptService(input: $input) {
       errors {
         ...errorFields
+      }
+      service {
+        ...serviceForViewFields
       }
     }
   }
   ${errorFields}
+  ${serviceForViewFields}
+`;
+
+export const rejectService = gql`
+  mutation($input: RejectServiceInput!) {
+    rejectService(input: $input) {
+      errors {
+        ...errorFields
+      }
+      service {
+        ...serviceForViewFields
+      }
+    }
+  }
+  ${errorFields}
+  ${serviceForViewFields}
 `;

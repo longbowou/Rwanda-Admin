@@ -29,19 +29,19 @@ export default new Router({
           meta: { requiresAuth: true }
         },
         {
-          path: "/services/categories",
+          path: "/services-categories",
           name: "services-categories",
           component: () => import("@/view/pages/services/categories/Datatable"),
           meta: { requiresAuth: true }
         },
         {
-          path: "/services/categories/create",
+          path: "/services-categories/create",
           name: "services-categories-create",
           component: () => import("@/view/pages/services/categories/Create"),
           meta: { requiresAuth: true }
         },
         {
-          path: "/services/categories/:id/edit",
+          path: "/services-categories/:id/edit",
           name: "services-categories-edit",
           component: () => import("@/view/pages/services/categories/Edit"),
           meta: { requiresAuth: true }

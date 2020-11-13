@@ -1,21 +1,13 @@
 import gql from "graphql-tag";
+import { serviceForViewFields } from "@/graphql/fragments/service";
 
 export const queryServiceForView = gql`
   query service($id: UUID!) {
     service(id: $id) {
-      id
-      title
-      content
-      delayDisplay
-      keywords
-      createdAt
-      activated
-      publishedDisplay
-      serviceCategory {
-        label
-      }
+      ...serviceForViewFields
     }
   }
+  ${serviceForViewFields}
 `;
 export const queryServiceCategory = gql`
   query serviceCategory($id: UUID!) {

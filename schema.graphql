@@ -15,6 +15,11 @@ interface UserInterface {
     username: String!
 }
 
+type AcceptService {
+    errors: [ErrorType]
+    service: ServiceType
+}
+
 type AccountType implements UserInterface {
     balance: String!
     chatmessageSet: [ChatMessageType!]!
@@ -44,6 +49,7 @@ type AccountType implements UserInterface {
 }
 
 type AdminMutation {
+    acceptService(input: AcceptServiceInput!): AcceptService
     changeAdminPassword(input: ChangeAdminPasswordInput!): ChangeAdminPassword
     createAdmin(input: AdminInput!): CreateAdmin
     createServiceCategory(input: CreateServiceCategoryInput!): CreateServiceCategory
@@ -51,9 +57,9 @@ type AdminMutation {
     deleteServiceCategory(id: UUID!): DeleteServiceCategory
     handleLitigation(input: HandleLitigationInput!): HandleLitigation
     login(input: LoginInput!): LoginAdmin
+    rejectService(input: RejectServiceInput!): RejectService
     updateAdmin(input: UpdateAdminInput!): UpdateAdmin
     updateAdminProfile(input: UpdateAdminProfileInput!): UpdateAdminProfile
-    updateService(input: UpdateServiceInput!): UpdateService
     updateServiceCategory(input: UpdateServiceCategoryInput!): UpdateServiceCategory
 }
 
@@ -243,19 +249,27 @@ type RefundType {
     status: String!
 }
 
+type RejectService {
+    errors: [ErrorType]
+    service: ServiceType
+}
+
 type ServiceCategoryType {
     createdAt: DateTime!
     description: String
     id: UUID!
     label: String!
     serviceSet: [ServiceType!]!
+    services: [ServiceType]!
 }
 
 type ServiceCommentType {
     account: AccountType!
     content: String!
-    createdAt: DateTime!
+    createdAt: String!
     id: UUID!
+    negative: Boolean!
+    positive: Boolean!
     published: Boolean!
     replyAt: DateTime
     replyContent: String
@@ -399,9 +413,13 @@ type ServicePurchaseUpdateRequestType {
 }
 
 type ServiceType {
+    accepted: Boolean!
     account: AccountType!
-    activated: Boolean!
     basePrice: Int!
+    canBeAccepted: Boolean!
+    canBeRejected: Boolean!
+    canBeSubmittedForApproval: Boolean!
+    comments: [ServiceCommentType]
     content: String!
     createdAt: String!
     delay: Int!
@@ -410,16 +428,21 @@ type ServiceType {
     fileUrl: String
     id: UUID!
     keywords: String
+    negativeCommentsCount: String!
     options: [ServiceOptionType]!
     optionsCount: Int!
     optionsCountDisplay: String!
+    positiveCommentsCount: String!
     published: Boolean!
-    publishedDisplay: String!
+    rejected: Boolean!
+    rejectedReason: String
     serviceCategory: ServiceCategoryType!
     servicemediaSet: [ServiceMediaType!]!
     serviceoptionSet: [ServiceOptionType!]!
     servicepurchaseSet: [ServicePurchaseType!]!
     stars: Int!
+    status: String!
+    submittedForApproval: Boolean!
     title: String!
 }
 
@@ -433,14 +456,13 @@ type UpdateAdminProfile {
     errors: [ErrorType]
 }
 
-type UpdateService {
-    errors: [ErrorType]
-    service: ServiceType
-}
-
 type UpdateServiceCategory {
     errors: [ErrorType]
     serviceCategory: ServiceCategoryType
+}
+
+input AcceptServiceInput {
+    id: UUID!
 }
 
 input AdminInput {
@@ -476,6 +498,11 @@ input LoginInput {
     password: String!
 }
 
+input RejectServiceInput {
+    id: UUID!
+    rejectedReason: String
+}
+
 input UpdateAdminInput {
     email: String
     firstName: String
@@ -498,11 +525,6 @@ input UpdateServiceCategoryInput {
     description: String
     id: UUID!
     label: String
-}
-
-input UpdateServiceInput {
-    activated: Boolean
-    id: UUID!
 }
 
 
