@@ -75,6 +75,13 @@
                     </span>
                   </div>
                   <div class="alert-text text-justify font-weight-bold">
+                    <div
+                      v-html="
+                        $t(
+                          'You <strong>rejected</strong> this service. Please find below the reason you provide.'
+                        )
+                      "
+                    ></div>
                     <strong>Reason :</strong> {{ service.rejectedReason }}<br />
                   </div>
                 </div>
