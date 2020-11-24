@@ -57,6 +57,12 @@ export default new Router({
           name: "services-view",
           component: () => import("@/view/pages/services/view"),
           meta: { requiresAuth: true }
+        },
+        {
+          path: "/refunds",
+          name: "refunds",
+          component: () => import("@/view/pages/refunds/Datatable"),
+          meta: { requiresAuth: true }
         }
       ]
     },

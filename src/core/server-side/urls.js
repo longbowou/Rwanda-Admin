@@ -11,3 +11,6 @@ export const servicesUrl =
 export const servicesOptionsUrl =
   process.env.VUE_APP_DATATABLES_BASE_URL +
   "administration/service/:pk/options.json";
+
+export const refundsUrl =
+  process.env.VUE_APP_DATATABLES_BASE_URL + "administration/refunds.json";

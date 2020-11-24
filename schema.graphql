@@ -52,14 +52,18 @@ type AdminMutation {
     acceptService(input: AcceptServiceInput!): AcceptService
     changeAdminPassword(input: ChangeAdminPasswordInput!): ChangeAdminPassword
     createAdmin(input: AdminInput!): CreateAdmin
+    createRefundWay(input: CreateRefundWayInput!): CreateRefundWay
     createServiceCategory(input: CreateServiceCategoryInput!): CreateServiceCategory
     deleteAdmin(id: UUID!): DeleteAdmin
+    deleteRefundWay(id: UUID!): DeleteRefundWay
     deleteServiceCategory(id: UUID!): DeleteServiceCategory
     handleLitigation(input: HandleLitigationInput!): HandleLitigation
     login(input: LoginInput!): LoginAdmin
+    processRefund(id: UUID!): ProcessRefund
     rejectService(input: RejectServiceInput!): RejectService
     updateAdmin(input: UpdateAdminInput!): UpdateAdmin
     updateAdminProfile(input: UpdateAdminProfileInput!): UpdateAdminProfile
+    updateRefundWay(input: UpdateRefundWayInput!): UpdateRefundWay
     updateServiceCategory(input: UpdateServiceCategoryInput!): UpdateServiceCategory
 }
 
@@ -119,12 +123,21 @@ type CreateAdmin {
     errors: [ErrorType]
 }
 
+type CreateRefundWay {
+    errors: [ErrorType]
+    refundWay: RefundWayType
+}
+
 type CreateServiceCategory {
     errors: [ErrorType]
     serviceCategory: ServiceCategoryType
 }
 
 type DeleteAdmin {
+    errors: [ErrorType]
+}
+
+type DeleteRefundWay {
     errors: [ErrorType]
 }
 
@@ -236,8 +249,15 @@ type PaymentType {
     depositSet: [DepositType!]!
     id: UUID!
     paymentMethod: String
+    refund: RefundType
     signature: String
     status: String!
+    type: String!
+}
+
+type ProcessRefund {
+    error: String
+    result: String
 }
 
 type RefundType {
@@ -245,8 +265,19 @@ type RefundType {
     amount: Int!
     createdAt: DateTime!
     id: UUID!
+    paymentSet: [PaymentType!]!
     phoneNumber: String
+    refundWay: RefundWayType
     status: String!
+}
+
+type RefundWayType {
+    countryCode: String!
+    createdAt: DateTime!
+    id: UUID!
+    name: String!
+    published: Boolean!
+    refundSet: [RefundType!]!
 }
 
 type RejectService {
@@ -349,6 +380,7 @@ type ServicePurchaseType {
     canBeCommented: Boolean!
     canBeDelivered: Boolean!
     canBeInDispute: Boolean!
+    canBeRefused: Boolean!
     canChat: Boolean!
     canceled: Boolean!
     canceledAt: DateTime
@@ -377,6 +409,8 @@ type ServicePurchaseType {
     operationSet: [OperationType!]!
     price: String!
     refused: Boolean!
+    refusedAt: DateTime
+    refusedReason: String
     service: ServiceType!
     serviceOptions: [ServiceOptionType!]!
     servicecommentSet: [ServiceCommentType!]!
@@ -456,6 +490,11 @@ type UpdateAdminProfile {
     errors: [ErrorType]
 }
 
+type UpdateRefundWay {
+    errors: [ErrorType]
+    refundWay: RefundWayType
+}
+
 type UpdateServiceCategory {
     errors: [ErrorType]
     serviceCategory: ServiceCategoryType
@@ -482,6 +521,12 @@ input ChangeAdminPasswordInput {
     passwordConfirmation: String!
 }
 
+input CreateRefundWayInput {
+    countryCode: String!
+    name: String!
+    published: Boolean
+}
+
 input CreateServiceCategoryInput {
     description: String
     label: String!
@@ -500,7 +545,7 @@ input LoginInput {
 
 input RejectServiceInput {
     id: UUID!
-    rejectedReason: String
+    rejectedReason: String!
 }
 
 input UpdateAdminInput {
@@ -519,6 +564,13 @@ input UpdateAdminProfileInput {
     id: UUID!
     lastName: String
     username: String
+}
+
+input UpdateRefundWayInput {
+    countryCode: String
+    id: UUID!
+    name: String
+    published: Boolean
 }
 
 input UpdateServiceCategoryInput {
