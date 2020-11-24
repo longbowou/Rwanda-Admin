@@ -33,7 +33,7 @@
           <!-- end:: Content Head -->
 
           <!-- begin:: Content Body -->
-          <div class="d-flex flex-column-fluid">
+          <div class="d-flex flex-column-fluid pt-5">
             <div
               :class="{
                 'container-fluid': contentFluid,

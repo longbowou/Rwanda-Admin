@@ -105,9 +105,6 @@ export default {
             const showBtn = `<a href="${showRouter.href}" class="btn btn-sm btn-clean btn-icon btn-hover-icon-dark btn-square btn-icon-sm" title="Show"><i class="flaticon-eye"></i></a>`;
             buttons.push(showBtn);
 
-            const deleteBtn = `<button class="btn btn-sm btn-clean btn-icon btn-icon-sm btn-hover-icon-danger btn-square btn-delete" title="Delete" data-id="${data.id}" data-title="${data.title}"><i class="fa fa-trash"></i></button>`;
-            buttons.push(deleteBtn);
-
             return buttons.join("");
           }
         }
@@ -125,39 +122,7 @@ export default {
         }
       }
     });
-
-    window.$("#services-dataTable").on("click", ".btn-delete", function() {
-      $this.deleteService(
-        window.$(this)[0].dataset.id,
-        window.$(this)[0].dataset.title,
-        window.$(this)[0]
-      );
-    });
   },
-  methods: {
-    async deleteService(id, title, btn) {
-      if (confirm("Do you really want to delete " + title + " ?")) {
-        let result = await this.$apollo.mutate({
-          mutation: "deleteService",
-          variables: {
-            id: id
-          }
-        });
-
-        window.$(btn).addClass("disabled spinner spinner-danger spinner-right");
-
-        if (window._.isEmpty(result.data.deleteService.errors)) {
-          this.notifySuccess("Service deleted successfully.");
-          this.datatable.ajax.reload(null, false);
-        }
-
-        window
-          .$(btn)
-          .removeClass("disabled spinner spinner-danger spinner-right");
-      } else {
-        btn.blur();
-      }
-    }
-  }
+  methods: {}
 };
 </script>

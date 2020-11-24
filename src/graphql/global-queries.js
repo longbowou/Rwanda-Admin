@@ -8,3 +8,19 @@ export const queryParameters = gql`
     }
   }
 `;
+
+export const queryStats = gql`
+  query {
+    stats {
+      servicesCount
+      servicesAcceptedCount
+      disputesCount
+      disputesNotHandledCount
+      refundsCount
+      refundsNotProcessedCount
+      servicePurchasesCount
+      servicePurchasesNotApprovedCount
+      accountsCount
+    }
+  }
+`;

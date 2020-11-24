@@ -82,6 +82,7 @@ type AdminQuery {
     serviceCategory(id: UUID!): ServiceCategoryType!
     "Service list"
     services(id: UUID): [ServiceType]
+    stats: StatsType
 }
 
 type AdminType implements UserInterface {
@@ -488,6 +489,18 @@ type ServiceType {
     status: String!
     submittedForApproval: Boolean!
     title: String!
+}
+
+type StatsType {
+    accountsCount: String!
+    disputesCount: String!
+    disputesNotHandledCount: String!
+    refundsCount: String!
+    refundsNotProcessedCount: String!
+    servicePurchasesCount: String!
+    servicePurchasesNotApprovedCount: String!
+    servicesAcceptedCount: String!
+    servicesCount: String!
 }
 
 type UpdateAdmin {
