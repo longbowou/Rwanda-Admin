@@ -132,7 +132,7 @@
       data-menu-toggle="hover"
       class="menu-item menu-item-submenu"
       v-bind:class="{
-        'menu-item-open': hasActiveChildren('/refunds')
+        'menu-item-open': hasActiveChildren('/refund')
       }"
     >
       <a href="#" class="menu-link menu-toggle">
@@ -157,7 +157,7 @@
           </li>
 
           <router-link
-            :to="{ name: 'services-categories' }"
+            :to="{ name: 'refund-ways' }"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
             <li

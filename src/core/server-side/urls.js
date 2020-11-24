@@ -14,3 +14,6 @@ export const servicesOptionsUrl =
 
 export const refundsUrl =
   process.env.VUE_APP_DATATABLES_BASE_URL + "administration/refunds.json";
+
+export const refundWaysUrl =
+  process.env.VUE_APP_DATATABLES_BASE_URL + "administration/refund-ways.json";

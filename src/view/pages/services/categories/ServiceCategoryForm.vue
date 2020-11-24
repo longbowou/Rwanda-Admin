@@ -77,11 +77,7 @@ export default {
       this.fetchServiceCategory();
     }
   },
-  mounted() {
-    if (this.creating) {
-      this.initPlugins();
-    }
-  },
+  mounted() {},
   methods: {
     async onSubmit(evt) {
       evt.preventDefault();

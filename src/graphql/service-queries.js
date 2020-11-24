@@ -9,6 +9,7 @@ export const queryServiceForView = gql`
   }
   ${serviceForViewFields}
 `;
+
 export const queryServiceCategory = gql`
   query serviceCategory($id: UUID!) {
     serviceCategory(id: $id) {

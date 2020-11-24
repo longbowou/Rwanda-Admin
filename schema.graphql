@@ -73,6 +73,7 @@ type AdminQuery {
     funds(id: UUID): [FundType]
     litigation(id: UUID!): LitigationType!
     parameters: ParametersType!
+    refundWay(id: UUID!): RefundWayType
     service(id: UUID!): ServiceType!
     "ServiceCategory list"
     serviceCategories(id: UUID): [ServiceCategoryType]

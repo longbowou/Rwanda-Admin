@@ -63,6 +63,24 @@ export default new Router({
           name: "refunds",
           component: () => import("@/view/pages/refunds/Datatable"),
           meta: { requiresAuth: true }
+        },
+        {
+          path: "/refund-ways",
+          name: "refund-ways",
+          component: () => import("@/view/pages/refunds/ways/Datatable"),
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/refund-ways/create",
+          name: "refund-ways-create",
+          component: () => import("@/view/pages/refunds/ways/Create"),
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/refund-ways/:id/edit",
+          name: "refund-ways-edit",
+          component: () => import("@/view/pages/refunds/ways/Edit"),
+          meta: { requiresAuth: true }
         }
       ]
     },
