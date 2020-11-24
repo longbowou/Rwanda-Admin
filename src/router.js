@@ -81,6 +81,18 @@ export default new Router({
           name: "refund-ways-edit",
           component: () => import("@/view/pages/refunds/ways/Edit"),
           meta: { requiresAuth: true }
+        },
+        {
+          path: "/parameters",
+          name: "parameters",
+          component: () => import("@/view/pages/parameters/Datatable"),
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/parameters/:id/edit",
+          name: "parameters-edit",
+          component: () => import("@/view/pages/parameters/Edit"),
+          meta: { requiresAuth: true }
         }
       ]
     },

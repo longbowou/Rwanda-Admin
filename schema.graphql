@@ -63,6 +63,7 @@ type AdminMutation {
     rejectService(input: RejectServiceInput!): RejectService
     updateAdmin(input: UpdateAdminInput!): UpdateAdmin
     updateAdminProfile(input: UpdateAdminProfileInput!): UpdateAdminProfile
+    updateParameter(input: UpdateParameterInput!): UpdateParameter
     updateRefundWay(input: UpdateRefundWayInput!): UpdateRefundWay
     updateServiceCategory(input: UpdateServiceCategoryInput!): UpdateServiceCategory
 }
@@ -72,6 +73,7 @@ type AdminQuery {
     "Fund list"
     funds(id: UUID): [FundType]
     litigation(id: UUID!): LitigationType!
+    parameter(id: UUID!): ParameterType
     parameters: ParametersType!
     refundWay(id: UUID!): RefundWayType
     service(id: UUID!): ServiceType!
@@ -229,6 +231,13 @@ type OperationType {
     id: UUID!
     servicePurchase: ServicePurchaseType
     type: String!
+}
+
+type ParameterType {
+    createdAt: DateTime!
+    id: UUID!
+    label: String!
+    value: String!
 }
 
 type ParametersType {
@@ -491,6 +500,11 @@ type UpdateAdminProfile {
     errors: [ErrorType]
 }
 
+type UpdateParameter {
+    errors: [ErrorType]
+    parameter: ParameterType
+}
+
 type UpdateRefundWay {
     errors: [ErrorType]
     refundWay: RefundWayType
@@ -565,6 +579,11 @@ input UpdateAdminProfileInput {
     id: UUID!
     lastName: String
     username: String
+}
+
+input UpdateParameterInput {
+    id: UUID!
+    value: String
 }
 
 input UpdateRefundWayInput {
