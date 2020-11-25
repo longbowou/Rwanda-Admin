@@ -93,6 +93,18 @@ export default new Router({
           name: "parameters-edit",
           component: () => import("@/view/pages/parameters/Edit"),
           meta: { requiresAuth: true }
+        },
+        {
+          path: "/accounts",
+          name: "accounts",
+          component: () => import("@/view/pages/accounts/Datatable"),
+          meta: { requiresAuth: true }
+        },
+        {
+          path: "/accounts/:id",
+          name: "accounts-view",
+          component: () => import("@/view/pages/accounts/View"),
+          meta: { requiresAuth: true }
         }
       ]
     },

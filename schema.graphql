@@ -12,6 +12,7 @@ interface UserInterface {
     isOnline: Boolean!
     lastLogin: String
     lastName: String
+    phoneNumber: String
     username: String!
 }
 
@@ -23,7 +24,7 @@ type AcceptService {
 type AccountType implements UserInterface {
     balance: String!
     chatmessageSet: [ChatMessageType!]!
-    createdAt: DateTime!
+    createdAt: String!
     depositSet: [DepositType!]!
     depositsSum: String!
     earningsSum: String!
@@ -38,6 +39,7 @@ type AccountType implements UserInterface {
     operationSet: [OperationType!]!
     ordersCount: String!
     paymentSet: [PaymentType!]!
+    phoneNumber: String
     purchasesCount: String!
     refundSet: [RefundType!]!
     refundsSum: String!
@@ -69,7 +71,8 @@ type AdminMutation {
 }
 
 type AdminQuery {
-    admin: AdminType!
+    account(id: UUID!): AccountType
+    admin: AdminType
     "Fund list"
     funds(id: UUID): [FundType]
     litigation(id: UUID!): LitigationType!
@@ -95,6 +98,7 @@ type AdminType implements UserInterface {
     lastLogin: String
     lastName: String
     litigationSet: [LitigationType!]!
+    phoneNumber: String
     username: String!
 }
 
@@ -493,6 +497,7 @@ type ServiceType {
 
 type StatsType {
     accountsCount: String!
+    commissionsSum: String!
     disputesCount: String!
     disputesNotHandledCount: String!
     refundsCount: String!

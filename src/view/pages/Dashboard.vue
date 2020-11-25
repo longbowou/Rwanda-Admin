@@ -1,7 +1,42 @@
 <template>
   <div>
     <!--begin::Dashboard-->
-    <div class="row">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 col-md-4 mb-5">
+        <div
+          class="card card-custom wave wave-animate-slower wave-success shadow-sm card-stretch"
+        >
+          <a v-on:click="$router.push('services')" href="javascript:void(0);">
+            <div class="card-body">
+              <div class="d-flex align-items-center p-5">
+                <div class="mr-6 zindex-1">
+                  <span class="svg-icon svg-icon-success svg-icon-4x">
+                    <inline-svg src="media/svg/icons/Shopping/Euro.svg" />
+                  </span>
+                </div>
+                <div class="d-flex flex-column">
+                  <a
+                    v-on:click="$router.push('services')"
+                    class="text-dark-65 text-hover-success font-weight-bold font-size-h5 mb-3 zindex-1"
+                  >
+                    {{ $t("Commissions Sum") }} <br />
+                  </a>
+                  <div class="text-dark-75 zindex-1">
+                    <a v-on:click="$router.push('services')">
+                      <span
+                        class="card-title font-weight-bolder text-dark-75 font-size-h1 mb-0 mt-6 d-block  zindex-1"
+                      >
+                        {{ stats.commissionsSum }}
+                      </span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+
       <div class="col-sm-12 col-md-4 mb-5">
         <div
           class="card card-custom wave wave-animate-slower wave-success shadow-sm card-stretch"
@@ -308,7 +343,7 @@
         <div
           class="card card-custom wave wave-animate-slower wave-success shadow-sm card-stretch"
         >
-          <a v-on:click="$router.push('account')" href="javascript:void(0);">
+          <a v-on:click="$router.push('accounts')" href="javascript:void(0);">
             <div class="card-body">
               <div class="d-flex align-items-center p-5">
                 <div class="mr-6 zindex-1">
@@ -318,13 +353,13 @@
                 </div>
                 <div class="d-flex flex-column">
                   <a
-                    v-on:click="$router.push('account')"
+                    v-on:click="$router.push('accounts')"
                     class="text-dark-65 text-hover-success font-weight-bold font-size-h5 mb-3 zindex-1"
                   >
                     {{ $t("Account Count") }}
                   </a>
                   <div class="text-dark-75 zindex-1">
-                    <a v-on:click="$router.push('account')">
+                    <a v-on:click="$router.push('accounts')">
                       <span
                         class="card-title font-weight-bolder text-dark-75 font-size-h1 mb-0 mt-6 d-block  zindex-1"
                       >

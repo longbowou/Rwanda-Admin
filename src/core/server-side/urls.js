@@ -10,7 +10,7 @@ export const servicesUrl =
 
 export const servicesOptionsUrl =
   process.env.VUE_APP_DATATABLES_BASE_URL +
-  "administration/service/:pk/options.json";
+  "administration/services/:pk/options.json";
 
 export const refundsUrl =
   process.env.VUE_APP_DATATABLES_BASE_URL + "administration/refunds.json";
@@ -20,3 +20,14 @@ export const refundWaysUrl =
 
 export const parametersUrl =
   process.env.VUE_APP_DATATABLES_BASE_URL + "administration/parameters.json";
+
+export const accountsUrl =
+  process.env.VUE_APP_DATATABLES_BASE_URL + "administration/accounts.json";
+
+export const accountServicesUrl =
+  process.env.VUE_APP_DATATABLES_BASE_URL +
+  "administration/account/:pk/services.json";
+
+export const accountOperationsUrl =
+  process.env.VUE_APP_DATATABLES_BASE_URL +
+  "administration/account/:pk/operations.json";

@@ -15,7 +15,9 @@
       >
         <a :href="href" class="menu-link" @click="navigate">
           <i class="menu-icon flaticon2-architecture-and-city"></i>
-          <span class="menu-text">Dashboard</span>
+          <span class="menu-text">
+            {{ $t("Dashboard") }}
+          </span>
         </a>
       </li>
     </router-link>
@@ -206,6 +208,33 @@
         </ul>
       </div>
     </li>
+
+    <router-link
+      :to="{ name: 'accounts' }"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active'
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <!--          <i class=" flaticon2-expand"></i>-->
+          <span class="menu-icon svg-icon svg-icon-lg svg-icon-2x">
+            <!--begin::Svg Icon-->
+            <inline-svg src="media/svg/icons/General/Smile.svg" />
+            <!--end::Svg Icon-->
+          </span>
+          <span class="menu-text">
+            {{ $t("Accounts") }}
+          </span>
+        </a>
+      </li>
+    </router-link>
 
     <router-link
       :to="{ name: 'parameters' }"

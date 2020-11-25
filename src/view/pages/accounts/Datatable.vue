@@ -11,11 +11,11 @@
                 class="svg-icon svg-icon-lg svg-icon-3x svg-icon-primary mr-3"
               >
                 <!--begin::Svg Icon-->
-                <inline-svg src="media/svg/icons/Shopping/Box2.svg" />
+                <inline-svg src="media/svg/icons/General/Smile.svg" />
                 <!--end::Svg Icon-->
               </span>
               <h3 class="card-label">
-                {{ $t("Services") }}
+                {{ $t("Accounts") }}
               </h3>
             </div>
           </div>
@@ -24,25 +24,27 @@
               <div class="col-sm-12">
                 <table
                   class="table table-hover dataTable dtr-inline text-center"
-                  id="services-dataTable"
+                  id="accounts-dataTable"
                 >
                   <thead>
                     <tr>
-                      <th style="width: 30%">{{ $t("Title") }}</th>
-                      <th>{{ $t("Category") }}</th>
-                      <th>{{ $t("Status") }}</th>
-                      <th>{{ $t("User") }}</th>
-                      <th>{{ $t("Created At") }}</th>
+                      <th>{{ $t("First Name") }}</th>
+                      <th>{{ $t("Last Name") }}</th>
+                      <th>{{ $t("Username") }}</th>
+                      <th>{{ $t("Email") }}</th>
+                      <th>{{ $t("Phone Number") }}</th>
+                      <th>{{ $t("Member since") }}</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th style="width: 30%">{{ $t("Title") }}</th>
-                      <th>{{ $t("Category") }}</th>
-                      <th>{{ $t("Status") }}</th>
-                      <th>{{ $t("User") }}</th>
-                      <th>{{ $t("Created At") }}</th>
+                      <th>{{ $t("First Name") }}</th>
+                      <th>{{ $t("Last Name") }}</th>
+                      <th>{{ $t("Username") }}</th>
+                      <th>{{ $t("Email") }}</th>
+                      <th>{{ $t("Phone Number") }}</th>
+                      <th>{{ $t("Member since") }}</th>
                       <th>Actions</th>
                     </tr>
                   </tfoot>
@@ -65,7 +67,7 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
 import "@/assets/plugins/datatable/datatables.bundle";
-import { servicesUrl } from "@/core/server-side/urls";
+import { accountsUrl } from "@/core/server-side/urls";
 import JwtService from "@/core/services/jwt.service";
 import i18nService from "@/core/services/i18n.service";
 import { toastMixin } from "@/view/mixins";
@@ -80,26 +82,26 @@ export default {
   },
   computed: {},
   mounted() {
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: this.$t("Services") }]);
-    this.$store.dispatch(SET_HEAD_TITLE, this.$t("Services"));
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: this.$t("Accounts") }]);
+    this.$store.dispatch(SET_HEAD_TITLE, this.$t("Accounts"));
 
     const $this = this;
-    this.datatable = window.$("#services-dataTable").DataTable({
+    this.datatable = window.$("#accounts-dataTable").DataTable({
       lengthMenu: [
         [10, 50, 100, -1],
         [10, 50, 100, "All"]
       ],
-      order: [[4, "desc"]],
+      order: [[5, "desc"]],
       columnDefs: [
         {
           orderable: false,
           searchable: false,
-          targets: [5],
+          targets: [6],
           render: function(data) {
             const buttons = [];
 
             const showRouter = $this.$router.resolve({
-              name: "services-view",
+              name: "accounts-view",
               params: { id: data.id }
             });
             const showBtn = `<a href="${showRouter.href}" class="btn btn-sm btn-clean btn-icon btn-hover-icon-dark btn-square btn-icon-sm" title="Show"><i class="flaticon-eye"></i></a>`;
@@ -115,7 +117,7 @@ export default {
       serverSide: true,
       stateSave: true,
       ajax: {
-        url: servicesUrl,
+        url: accountsUrl,
         headers: {
           "Accept-Language": i18nService.getActiveLanguage(),
           Authorization: "JWT " + JwtService.getAuth().token
