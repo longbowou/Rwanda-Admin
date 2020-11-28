@@ -9,6 +9,9 @@ interface UserInterface {
     email: String!
     firstName: String
     fullName: String
+    imageUrl: String
+    isActive: Boolean!
+    isActiveDisplay: String!
     isOnline: Boolean!
     lastLogin: String
     lastName: String
@@ -32,6 +35,9 @@ type AccountType implements UserInterface {
     firstName: String
     fullName: String
     id: UUID!
+    imageUrl: String
+    isActive: Boolean!
+    isActiveDisplay: String!
     isOnline: Boolean!
     lastLogin: String
     lastName: String
@@ -47,6 +53,7 @@ type AccountType implements UserInterface {
     servicecommentSet: [ServiceCommentType!]!
     servicepurchaseSet: [ServicePurchaseType!]!
     servicesCount: String!
+    user: UserType!
     username: String!
 }
 
@@ -63,6 +70,7 @@ type AdminMutation {
     login(input: LoginInput!): LoginAdmin
     processRefund(id: UUID!): ProcessRefund
     rejectService(input: RejectServiceInput!): RejectService
+    updateAccount(input: UpdateAccountInput!): UpdateAccount
     updateAdmin(input: UpdateAdminInput!): UpdateAdmin
     updateAdminProfile(input: UpdateAdminProfileInput!): UpdateAdminProfile
     updateParameter(input: UpdateParameterInput!): UpdateParameter
@@ -94,11 +102,15 @@ type AdminType implements UserInterface {
     firstName: String
     fullName: String
     id: UUID!
+    imageUrl: String
+    isActive: Boolean!
+    isActiveDisplay: String!
     isOnline: Boolean!
     lastLogin: String
     lastName: String
     litigationSet: [LitigationType!]!
     phoneNumber: String
+    user: UserType!
     username: String!
 }
 
@@ -508,6 +520,11 @@ type StatsType {
     servicesCount: String!
 }
 
+type UpdateAccount {
+    errors: [ErrorType]
+    user: UserType
+}
+
 type UpdateAdmin {
     admin: AdminType
     errors: [ErrorType]
@@ -531,6 +548,30 @@ type UpdateRefundWay {
 type UpdateServiceCategory {
     errors: [ErrorType]
     serviceCategory: ServiceCategoryType
+}
+
+type UserType {
+    account: AccountType
+    admin: AdminType
+    createdAt: DateTime!
+    dateJoined: DateTime!
+    email: String!
+    firstName: String!
+    id: UUID!
+    image: String
+    "Précise si l’utilisateur doit être considéré comme actif. Décochez ceci plutôt que de supprimer le compte."
+    isActive: Boolean!
+    isOnline: Boolean!
+    "Précise si l’utilisateur peut se connecter à ce site d'administration."
+    isStaff: Boolean!
+    "Précise que l’utilisateur possède toutes les permissions sans les assigner explicitement."
+    isSuperuser: Boolean!
+    lastLogin: DateTime
+    lastName: String!
+    password: String!
+    phoneNumber: String
+    "Requis. 150 caractères maximum. Uniquement des lettres, nombres et les caractères « @ », « . », « + », « - » et « _ »."
+    username: String!
 }
 
 input AcceptServiceInput {
@@ -581,6 +622,12 @@ input RejectServiceInput {
     rejectedReason: String!
 }
 
+input UpdateAccountInput {
+    id: UUID!
+    "Précise si l’utilisateur doit être considéré comme actif. Décochez ceci plutôt que de supprimer le compte."
+    isActive: Boolean
+}
+
 input UpdateAdminInput {
     email: String
     firstName: String
@@ -588,6 +635,7 @@ input UpdateAdminInput {
     isActive: Boolean
     isSuperuser: Boolean
     lastName: String
+    phoneNumber: String
     username: String
 }
 
@@ -596,6 +644,7 @@ input UpdateAdminProfileInput {
     firstName: String
     id: UUID!
     lastName: String
+    phoneNumber: String
     username: String
 }
 

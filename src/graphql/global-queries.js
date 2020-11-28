@@ -25,24 +25,3 @@ export const queryStats = gql`
     }
   }
 `;
-
-export const queryAccount = gql`
-  query queryAccount($id: UUID!) {
-    account(id: $id) {
-      id
-      firstName
-      lastName
-      username
-      email
-      phoneNumber
-      balance
-      servicesCount
-      purchasesCount
-      ordersCount
-      depositsSum
-      refundsSum
-      earningsSum
-      createdAt
-    }
-  }
-`;

@@ -19,6 +19,21 @@
             </div>
 
             <div class="card-toolbar">
+              <span
+                id="activate-switch"
+                class="switch switch-lg switch-outline switch-icon switch-success m-2"
+              >
+                <label>
+                  <input
+                    v-model="account.isActive"
+                    v-on:change="updateAccount"
+                    type="checkbox"
+                    name="select"
+                  />
+                  <span></span>
+                </label>
+              </span>
+
               <button
                 @click="$router.push({ name: 'accounts' })"
                 class="btn btn-light-dark font-weight-bolder m-2"
@@ -189,6 +204,28 @@
               <div class="col-sm-12 col-md-6">
                 <div class="form-group row">
                   <label class="col-form-label col-4 text-lg-right text-left">
+                    {{ $t("Is Active") }}
+                  </label>
+                  <div class="col-8">
+                    <span class="form-control-plaintext font-weight-bold">
+                      <span
+                        style="height: 5px"
+                        :class="[
+                          'label label-lg font-weight-bold label-inline label-square',
+                          account.isActive && 'label-light-success',
+                          !account.isActive && 'label-light-warning'
+                        ]"
+                      >
+                        {{ account.isActiveDisplay }}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group row">
+                  <label class="col-form-label col-4 text-lg-right text-left">
                     {{ $t("Member since") }}
                   </label>
                   <div class="col-8">
@@ -319,7 +356,6 @@
 import { mapGetters } from "vuex";
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
-import { queryAccount } from "@/graphql/global-queries";
 import "@/assets/plugins/datatable/datatables.bundle";
 import {
   accountOperationsUrl,
@@ -327,9 +363,13 @@ import {
 } from "@/core/server-side/urls";
 import i18nService from "@/core/services/i18n.service";
 import JwtService from "@/core/services/jwt.service";
+import { updateAccount } from "@/graphql/account-mutations";
+import { queryAccount } from "@/graphql/account-queries";
+import { toastMixin } from "@/view/mixins";
 
 export default {
   name: "AccountView",
+  mixins: [toastMixin],
   data() {
     return {
       account: {},
@@ -425,6 +465,40 @@ export default {
       if (window._.isEmpty(result.errors)) {
         this.account = result.data.account;
       }
+    },
+    async updateAccount() {
+      const activateSwitch = window.$("#activate-switch");
+      if (this.account.isActive) {
+        activateSwitch.addClass("spinner spinner-darker-success spinner-left");
+      } else {
+        activateSwitch.addClass("spinner spinner-darker-success spinner-right");
+      }
+
+      let result = await this.$apollo.mutate({
+        mutation: updateAccount,
+        variables: {
+          input: {
+            id: this.$route.params.id,
+            isActive: this.account.isActive
+          }
+        }
+      });
+
+      if (this.account.isActive) {
+        activateSwitch.removeClass(
+          "spinner spinner-darker-success spinner-right"
+        );
+      } else {
+        activateSwitch.removeClass(
+          "spinner spinner-darker-success spinner-left"
+        );
+      }
+
+      if (!window._.isEmpty(result.data.updateAccount.errors)) {
+        return;
+      }
+
+      this.notifySuccess(this.$t("Account updated successfully."));
     }
   }
 };

@@ -33,6 +33,7 @@
                       <th>{{ $t("Username") }}</th>
                       <th>{{ $t("Email") }}</th>
                       <th>{{ $t("Phone Number") }}</th>
+                      <th>{{ $t("Is Active") }}</th>
                       <th>{{ $t("Member since") }}</th>
                       <th>Actions</th>
                     </tr>
@@ -44,6 +45,7 @@
                       <th>{{ $t("Username") }}</th>
                       <th>{{ $t("Email") }}</th>
                       <th>{{ $t("Phone Number") }}</th>
+                      <th>{{ $t("Is Active") }}</th>
                       <th>{{ $t("Member since") }}</th>
                       <th>Actions</th>
                     </tr>
@@ -91,12 +93,12 @@ export default {
         [10, 50, 100, -1],
         [10, 50, 100, "All"]
       ],
-      order: [[5, "desc"]],
+      order: [[6, "desc"]],
       columnDefs: [
         {
           orderable: false,
           searchable: false,
-          targets: [6],
+          targets: [7],
           render: function(data) {
             const buttons = [];
 
