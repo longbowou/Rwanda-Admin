@@ -32,6 +32,7 @@
                     <tr>
                       <th>{{ $t("Amount") }}</th>
                       <th>{{ $t("Status") }}</th>
+                      <th>{{ $t("Payment Status") }}</th>
                       <th>{{ $t("Refund Way") }}</th>
                       <th>{{ $t("Phone Number") }}</th>
                       <th>{{ $t("Created At") }}</th>
@@ -42,6 +43,7 @@
                     <tr>
                       <th>{{ $t("Amount") }}</th>
                       <th>{{ $t("Status") }}</th>
+                      <th>{{ $t("Payment Status") }}</th>
                       <th>{{ $t("Refund Way") }}</th>
                       <th>{{ $t("Phone Number") }}</th>
                       <th>{{ $t("Created At") }}</th>
@@ -92,12 +94,12 @@ export default {
         [10, 50, 100, -1],
         [10, 50, 100, "All"]
       ],
-      order: [[4, "desc"]],
+      order: [[5, "desc"]],
       columnDefs: [
         {
           orderable: false,
           searchable: false,
-          targets: [5],
+          targets: [6],
           render: function(data) {
             const buttons = [];
 
