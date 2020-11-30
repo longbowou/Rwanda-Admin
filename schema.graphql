@@ -503,6 +503,7 @@ type ServiceType {
     optionsCountDisplay: String!
     positiveCommentsCount: String!
     published: Boolean!
+    publishedDisplay: String!
     rejected: Boolean!
     rejectedReason: String
     serviceCategory: ServiceCategoryType!

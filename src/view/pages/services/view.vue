@@ -56,9 +56,18 @@
               </button>
             </div>
           </div>
+
           <div class="card-body">
             <div class="row">
-              <div class="col-sm-8" v-html="service.content"></div>
+              <div class="col-sm-8">
+                <div class="mb-5" v-if="service.fileUrl !== null">
+                  <img :src="service.fileUrl" alt="file" width="100%" />
+                  <hr />
+                </div>
+
+                <div v-html="service.content"></div>
+              </div>
+
               <div class="col-sm-4">
                 <div
                   v-if="service.rejected"
@@ -141,7 +150,15 @@
                   </label>
                   <div class="col-8">
                     <span class="form-control-plaintext font-weight-bold">
-                      {{ service.publishedDisplay }}
+                      <span
+                        :class="[
+                          'label label-lg font-weight-bold label-inline label-square',
+                          service.published && 'label-light-success',
+                          !service.published && 'label-light-warning'
+                        ]"
+                      >
+                        {{ service.publishedDisplay }}
+                      </span>
                     </span>
                   </div>
                 </div>
