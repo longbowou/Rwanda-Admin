@@ -258,7 +258,6 @@ export default {
       this.notifySuccess(this.$t("Refund refused."));
     },
     showModal(id, amount) {
-      console.log(id, amount);
       this.input.id = id;
       this.amount = amount;
       this.input.refusedReason = null;
