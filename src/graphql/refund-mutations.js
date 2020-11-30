@@ -10,6 +10,17 @@ export const processRefund = gql`
   }
 `;
 
+export const refuseRefund = gql`
+  mutation refuseRefund($input: RefuseRefundInput!) {
+    refuseRefund(input: $input) {
+      errors {
+        ...errorFields
+      }
+    }
+  }
+  ${errorFields}
+`;
+
 export const createRefundWay = gql`
   mutation createRefundWay($input: CreateRefundWayInput!) {
     createRefundWay(input: $input) {

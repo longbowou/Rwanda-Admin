@@ -69,6 +69,7 @@ type AdminMutation {
     handleLitigation(input: HandleLitigationInput!): HandleLitigation
     login(input: LoginInput!): LoginAdmin
     processRefund(id: UUID!): ProcessRefund
+    refuseRefund(input: RefuseRefundInput!): RefuseRefund
     rejectService(input: RejectServiceInput!): RejectService
     updateAccount(input: UpdateAccountInput!): UpdateAccount
     updateAdmin(input: UpdateAdminInput!): UpdateAdmin
@@ -267,13 +268,14 @@ type PaymentType {
     amount: Int!
     canceled: Boolean!
     celPhoneNum: String
+    comment: String
     confirmed: Boolean!
     cpmPayid: String
     cpmPhonePrefixe: String
     cpmResult: String
     cpmTransStatus: String
     createdAt: DateTime!
-    depositSet: [DepositType!]!
+    deposit: DepositType
     id: UUID!
     paymentMethod: String
     refund: RefundType
@@ -292,9 +294,10 @@ type RefundType {
     amount: Int!
     createdAt: DateTime!
     id: UUID!
-    paymentSet: [PaymentType!]!
+    payment: PaymentType
     phoneNumber: String
     refundWay: RefundWayType
+    refusedReason: String
     status: String!
 }
 
@@ -305,6 +308,11 @@ type RefundWayType {
     name: String!
     published: Boolean!
     refundSet: [RefundType!]!
+}
+
+type RefuseRefund {
+    errors: [ErrorType]
+    refund: RefundType
 }
 
 type RejectService {
@@ -615,6 +623,11 @@ input HandleLitigationInput {
 input LoginInput {
     login: String!
     password: String!
+}
+
+input RefuseRefundInput {
+    id: UUID!
+    refusedReason: String!
 }
 
 input RejectServiceInput {

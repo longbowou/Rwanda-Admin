@@ -59,6 +59,55 @@
       </div>
     </div>
     <!--end::Dashboard-->
+
+    <b-modal ref="refuseModal" class="modal fade">
+      <template #modal-header="{close}">
+        <h5 class="modal-title">
+          {{ $t("Do you really want to refuse the refund ?") }}
+        </h5>
+        <button type="button" class="close" @click="close()">
+          <i aria-hidden="true" class="ki ki-close"></i>
+        </button>
+      </template>
+
+      <template #default>
+        <form @submit="refuseRefund" action="#">
+          <h3>{{ $t("Refund of") + " " + amount + " " + currency }}</h3>
+          <br />
+          <b-textarea
+            required
+            autofocus
+            v-model="input.refusedReason"
+            rows="4"
+            class="form-control form-control-lg form-control-solid"
+            type="text"
+            :placeholder="$t('Reason why')"
+            autocomplete="off"
+          />
+
+          <input ref="submitModal" type="submit" style="display: none" />
+        </form>
+      </template>
+
+      <template #modal-footer="{ ok, cancel, hide }">
+        <button
+          type="button"
+          class="btn btn-square btn-light-primary font-weight-bold"
+          @click="hide()"
+        >
+          {{ $t("Cancel") }}
+        </button>
+
+        <button
+          id="btnSubmit"
+          type="button"
+          @click="$refs.submitModal.click()"
+          :class="['btn btn-square font-weight-bold btn-light-warning']"
+        >
+          {{ $t("Refuse") }}
+        </button>
+      </template>
+    </b-modal>
   </div>
 </template>
 <style scoped lang="css">
@@ -73,17 +122,24 @@ import { refundsUrl } from "@/core/server-side/urls";
 import JwtService from "@/core/services/jwt.service";
 import i18nService from "@/core/services/i18n.service";
 import { toastMixin } from "@/view/mixins";
-import { processRefund } from "@/graphql/refund-mutations";
+import { refuseRefund, processRefund } from "@/graphql/refund-mutations";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Refunds",
   mixins: [toastMixin],
   data() {
     return {
-      datatable: {}
+      datatable: {},
+      amount: null,
+      input: {
+        refusedReason: null
+      }
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["currency"])
+  },
   mounted() {
     this.$store.dispatch(SET_BREADCRUMB, [{ title: this.$t("Refunds") }]);
     this.$store.dispatch(SET_HEAD_TITLE, this.$t("Refunds"));
@@ -108,6 +164,11 @@ export default {
               buttons.push(processBtn);
             }
 
+            if (data.can_be_refused) {
+              const refuseBtn = `<button class="btn btn-sm btn-clean btn-icon btn-icon-sm btn-hover-icon-warning btn-square btn-refuse" title="Refuse" data-id="${data.id}" data-amount="${data.amount_display}"><i class="flaticon2-cancel"></i></button>`;
+              buttons.push(refuseBtn);
+            }
+
             return buttons.join("");
           }
         }
@@ -128,6 +189,13 @@ export default {
 
     window.$("#refunds-dataTable").on("click", ".btn-process", function() {
       $this.processRefund(window.$(this)[0].dataset.id, window.$(this)[0]);
+    });
+
+    window.$("#refunds-dataTable").on("click", ".btn-refuse", function() {
+      $this.showModal(
+        window.$(this)[0].dataset.id,
+        window.$(this)[0].dataset.amount
+      );
     });
   },
   methods: {
@@ -161,6 +229,40 @@ export default {
       } else {
         btn.blur();
       }
+    },
+    async refuseRefund(e) {
+      e.preventDefault();
+
+      const submitButton = window.$("#btnSubmit");
+      submitButton.attr("disabled", true);
+      submitButton.addClass("spinner spinner-light spinner-right");
+
+      let result = await this.$apollo.mutate({
+        mutation: refuseRefund,
+        variables: {
+          input: this.input
+        }
+      });
+
+      submitButton.removeAttr("disabled");
+      submitButton.removeClass("spinner spinner-light spinner-right");
+
+      if (!window._.isEmpty(result.data.refuseRefund.errors)) {
+        return;
+      }
+
+      this.datatable.ajax.reload(null, false);
+
+      this.$refs.refuseModal.hide();
+
+      this.notifySuccess(this.$t("Refund refused."));
+    },
+    showModal(id, amount) {
+      console.log(id, amount);
+      this.input.id = id;
+      this.amount = amount;
+      this.input.refusedReason = null;
+      this.$refs.refuseModal.show();
     }
   }
 };
