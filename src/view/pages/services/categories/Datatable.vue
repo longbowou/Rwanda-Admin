@@ -79,8 +79,9 @@ import "@/assets/plugins/datatable/datatables.bundle";
 import { serviceCategoriesUrl } from "@/core/server-side/urls";
 import JwtService from "@/core/services/jwt.service";
 import i18nService from "@/core/services/i18n.service";
-
+import { Swappable } from "@shopify/draggable";
 import { toastMixin } from "@/view/mixins";
+import { deleteServiceCategory } from "@/graphql/service-mutations";
 
 export default {
   name: "Categories",
@@ -119,8 +120,11 @@ export default {
             const editBtn = `<a href="${editRouter.href}" class="btn btn-sm btn-clean btn-icon btn-hover-icon-success btn-square btn-icon-sm" title="Edit"><i class="fa fa-edit"></i></a>`;
             buttons.push(editBtn);
 
-            const deleteBtn = `<button class="btn btn-sm btn-clean btn-icon btn-icon-sm btn-hover-icon-danger btn-square btn-delete" title="Delete" data-id="${data.id}" data-title="${data.title}"><i class="fa fa-trash"></i></button>`;
+            const deleteBtn = `<button class="btn btn-sm btn-clean btn-icon btn-icon-sm btn-hover-icon-danger btn-square btn-delete" title="Delete" data-id="${data.id}" data-label="${data.label}"><i class="fa fa-trash"></i></button>`;
             buttons.push(deleteBtn);
+
+            const draggableBtn = `<button class="btn btn-sm btn-clean btn-icon btn-icon-sm btn-hover-icon-primary btn-square draggable-handle" title="Sort" data-id="${data.id}" data-title="${data.label}"><i class="flaticon2-indent-dots"></i></button>`;
+            buttons.push(draggableBtn);
 
             return buttons.join("");
           }
@@ -140,6 +144,18 @@ export default {
       }
     });
 
+    this.datatable.on("draw", function() {
+      let swappable = new Swappable(
+        document.querySelectorAll("#categories-dataTable tbody"),
+        {
+          draggable: "tr",
+          handle: "tbody .draggable-handle"
+        }
+      );
+
+      swappable.on("swappable:stop", () => {});
+    });
+
     window.$("#categories-dataTable").on("click", ".btn-delete", function() {
       $this.deleteServiceCategory(
         window.$(this)[0].dataset.id,
@@ -156,7 +172,7 @@ export default {
         )
       ) {
         let result = await this.$apollo.mutate({
-          mutation: this.deleteServiceCategory(),
+          mutation: deleteServiceCategory,
           variables: {
             id: id
           }
