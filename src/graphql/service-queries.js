@@ -15,6 +15,7 @@ export const queryServiceCategory = gql`
     serviceCategory(id: $id) {
       id
       label
+      published
       description
     }
   }

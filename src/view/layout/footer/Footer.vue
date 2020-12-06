@@ -17,12 +17,21 @@
         </a>
       </div>
       <div class="nav nav-dark">
+        Powered by
         <a
           href="https://gitlab.com/longbowou"
           target="_blank"
-          class="text-muted pl-0 text-hover-primary"
+          class="text-white opacity-55 pl-0 text-hover-primary ml-2 mr-2"
         >
-          Powered by Longbowou
+          Longbowou
+        </a>
+        &
+        <a
+          href="https://gitlab.com/Stalia"
+          target="_blank"
+          class="text-white opacity-55 pl-0 text-hover-primary ml-2"
+        >
+          Esther KANGBIETE
         </a>
       </div>
     </div>
