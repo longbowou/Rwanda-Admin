@@ -47,6 +47,22 @@
                 <i class="flaticon2-cancel"></i>
               </button>
 
+              <span
+                v-if="service.accepted"
+                id="activate-switch"
+                class="switch switch-lg switch-outline switch-icon switch-success m-2"
+              >
+                <label>
+                  <input
+                    v-model="service.publishedByAdmin"
+                    v-on:change="updateService"
+                    type="checkbox"
+                    name="select"
+                  />
+                  <span></span>
+                </label>
+              </span>
+
               <button
                 @click="$router.push({ name: 'services' })"
                 class="btn btn-light-dark font-weight-bolder m-2"
@@ -251,7 +267,11 @@ import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
 import { queryServiceForView } from "@/graphql/service-queries";
 import ServiceOptions from "@/view/pages/services/options/Datatable";
-import { acceptService, rejectService } from "@/graphql/service-mutations";
+import {
+  acceptService,
+  publishUnPublishService,
+  rejectService
+} from "@/graphql/service-mutations";
 import { toastMixin } from "@/view/mixins";
 
 export default {
@@ -375,6 +395,40 @@ export default {
       this.$refs.rejectModal.hide();
 
       this.notifySuccess("Service rejected successfully.");
+    },
+    async updateService() {
+      const activateSwitch = window.$("#activate-switch");
+      if (this.service.publishedByAdmin) {
+        activateSwitch.addClass("spinner spinner-darker-success spinner-left");
+      } else {
+        activateSwitch.addClass("spinner spinner-darker-success spinner-right");
+      }
+
+      let result = await this.$apollo.mutate({
+        mutation: publishUnPublishService,
+        variables: {
+          input: {
+            id: this.$route.params.id,
+            publishedByAdmin: this.service.publishedByAdmin
+          }
+        }
+      });
+
+      if (this.service.publishedByAdmin) {
+        activateSwitch.removeClass(
+          "spinner spinner-darker-success spinner-right"
+        );
+      } else {
+        activateSwitch.removeClass(
+          "spinner spinner-darker-success spinner-left"
+        );
+      }
+
+      if (!window._.isEmpty(result.data.publishUnPublishService.errors)) {
+        return;
+      }
+
+      this.notifySuccess(this.$t("Service updated successfully."));
     }
   }
 };

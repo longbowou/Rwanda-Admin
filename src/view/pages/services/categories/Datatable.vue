@@ -46,6 +46,8 @@
                   <thead>
                     <tr>
                       <th>{{ $t("Label") }}</th>
+                      <th>{{ $t("Published") }}</th>
+                      <th>{{ $t("Index") }}</th>
                       <th>{{ $t("Created At") }}</th>
                       <th>Actions</th>
                     </tr>
@@ -53,6 +55,8 @@
                   <tfoot>
                     <tr>
                       <th>{{ $t("Label") }}</th>
+                      <th>{{ $t("Published") }}</th>
+                      <th>{{ $t("Index") }}</th>
                       <th>{{ $t("Created At") }}</th>
                       <th>Actions</th>
                     </tr>
@@ -79,9 +83,12 @@ import "@/assets/plugins/datatable/datatables.bundle";
 import { serviceCategoriesUrl } from "@/core/server-side/urls";
 import JwtService from "@/core/services/jwt.service";
 import i18nService from "@/core/services/i18n.service";
-import { Swappable } from "@shopify/draggable";
+import { Sortable } from "@shopify/draggable";
 import { toastMixin } from "@/view/mixins";
-import { deleteServiceCategory } from "@/graphql/service-mutations";
+import {
+  deleteServiceCategory,
+  sortServiceCategories
+} from "@/graphql/service-mutations";
 
 export default {
   name: "Categories",
@@ -104,12 +111,17 @@ export default {
         [10, 50, 100, -1],
         [10, 50, 100, "All"]
       ],
-      order: [[1, "desc"]],
+      order: [[2, "asc"]],
       columnDefs: [
+        {
+          targets: [2],
+          visible: false,
+          searchable: false
+        },
         {
           orderable: false,
           searchable: false,
-          targets: [2],
+          targets: [4],
           render: function(data) {
             const buttons = [];
 
@@ -123,7 +135,7 @@ export default {
             const deleteBtn = `<button class="btn btn-sm btn-clean btn-icon btn-icon-sm btn-hover-icon-danger btn-square btn-delete" title="Delete" data-id="${data.id}" data-label="${data.label}"><i class="fa fa-trash"></i></button>`;
             buttons.push(deleteBtn);
 
-            const draggableBtn = `<button class="btn btn-sm btn-clean btn-icon btn-icon-sm btn-hover-icon-primary btn-square draggable-handle" title="Sort" data-id="${data.id}" data-title="${data.label}"><i class="flaticon2-indent-dots"></i></button>`;
+            const draggableBtn = `<button class="btn btn-sm btn-clean btn-icon btn-icon-sm btn-hover-icon-primary btn-square draggable-handle" title="Sort" data-id="${data.id}"><i class="flaticon2-indent-dots"></i></button>`;
             buttons.push(draggableBtn);
 
             return buttons.join("");
@@ -134,7 +146,7 @@ export default {
       searching: true,
       processing: true,
       serverSide: true,
-      stateSave: true,
+      // stateSave: true,
       ajax: {
         url: serviceCategoriesUrl,
         headers: {
@@ -145,7 +157,7 @@ export default {
     });
 
     this.datatable.on("draw", function() {
-      let swappable = new Swappable(
+      const sortable = new Sortable(
         document.querySelectorAll("#categories-dataTable tbody"),
         {
           draggable: "tr",
@@ -153,7 +165,23 @@ export default {
         }
       );
 
-      swappable.on("swappable:stop", () => {});
+      let sorted = [];
+      sortable.on("sortable:start", () => {
+        sorted = [];
+      });
+
+      sortable.on("sortable:sorted", e => {
+        sorted.push({
+          id:
+            e.data.dragEvent.data.originalSource.childNodes[3].childNodes[2]
+              .dataset.id,
+          index: e.data.newIndex
+        });
+      });
+
+      sortable.on("sortable:stop", () => {
+        $this.sortServiceCategory([...sorted]);
+      });
     });
 
     window.$("#categories-dataTable").on("click", ".btn-delete", function() {
@@ -190,6 +218,18 @@ export default {
           .removeClass("disabled spinner spinner-danger spinner-right");
       } else {
         btn.blur();
+      }
+    },
+    async sortServiceCategory(sorted) {
+      let result = await this.$apollo.mutate({
+        mutation: sortServiceCategories,
+        variables: {
+          sorted: sorted
+        }
+      });
+
+      if (result.data.sortServiceCategories.isSorted) {
+        this.notifySuccess(this.$t("Service Category sorted successfully."));
       }
     }
   }

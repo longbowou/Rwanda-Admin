@@ -69,8 +69,10 @@ type AdminMutation {
     handleLitigation(input: HandleLitigationInput!): HandleLitigation
     login(input: LoginInput!): LoginAdmin
     processRefund(id: UUID!): ProcessRefund
+    publishUnPublishService(input: PublishUnPublishServiceInput!): PublishUnPublishService
     refuseRefund(input: RefuseRefundInput!): RefuseRefund
     rejectService(input: RejectServiceInput!): RejectService
+    sortServiceCategories(sorted: [SortedServiceCategoryInputType]!): SortServiceCategories
     updateAccount(input: UpdateAccountInput!): UpdateAccount
     updateAdmin(input: UpdateAdminInput!): UpdateAdmin
     updateAdminProfile(input: UpdateAdminProfileInput!): UpdateAdminProfile
@@ -289,6 +291,11 @@ type ProcessRefund {
     result: String
 }
 
+type PublishUnPublishService {
+    errors: [ErrorType]
+    service: ServiceType
+}
+
 type RefundType {
     account: AccountType!
     amount: Int!
@@ -324,7 +331,9 @@ type ServiceCategoryType {
     createdAt: DateTime!
     description: String
     id: UUID!
+    index: Int!
     label: String!
+    published: Boolean!
     serviceSet: [ServiceType!]!
     services: [ServiceType]!
 }
@@ -483,6 +492,7 @@ type ServicePurchaseUpdateRequestType {
 
 type ServiceType {
     accepted: Boolean!
+    acceptedAt: DateTime
     account: AccountType!
     basePrice: Int!
     canBeAccepted: Boolean!
@@ -503,6 +513,7 @@ type ServiceType {
     optionsCountDisplay: String!
     positiveCommentsCount: String!
     published: Boolean!
+    publishedByAdmin: Boolean!
     publishedDisplay: String!
     rejected: Boolean!
     rejectedReason: String
@@ -514,6 +525,10 @@ type ServiceType {
     status: String!
     submittedForApproval: Boolean!
     title: String!
+}
+
+type SortServiceCategories {
+    isSorted: Boolean
 }
 
 type StatsType {
@@ -613,6 +628,7 @@ input CreateRefundWayInput {
 input CreateServiceCategoryInput {
     description: String
     label: String!
+    published: Boolean
 }
 
 input HandleLitigationInput {
@@ -626,6 +642,11 @@ input LoginInput {
     password: String!
 }
 
+input PublishUnPublishServiceInput {
+    id: UUID!
+    publishedByAdmin: Boolean
+}
+
 input RefuseRefundInput {
     id: UUID!
     refusedReason: String!
@@ -634,6 +655,11 @@ input RefuseRefundInput {
 input RejectServiceInput {
     id: UUID!
     rejectedReason: String!
+}
+
+input SortedServiceCategoryInputType {
+    id: UUID!
+    index: Int!
 }
 
 input UpdateAccountInput {
@@ -678,6 +704,7 @@ input UpdateServiceCategoryInput {
     description: String
     id: UUID!
     label: String
+    published: Boolean
 }
 
 

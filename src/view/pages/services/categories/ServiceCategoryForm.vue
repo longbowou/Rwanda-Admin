@@ -32,6 +32,20 @@
       />
     </div>
 
+    <div class="form-group">
+      <div class="col-sm-12 checkbox-inline p-0">
+        <label class="checkbox checkbox-square checkbox-lg">
+          <input
+            v-model="input.published"
+            class="form-control form-control-lg checkbox"
+            type="checkbox"
+          />
+          <span></span>
+          {{ $t("Published") }}
+        </label>
+      </div>
+    </div>
+
     <br />
 
     <div class="col-sm-12 text-center">
@@ -61,7 +75,9 @@ export default {
   data() {
     return {
       serviceCategory: {},
-      input: {}
+      input: {
+        published: true
+      }
     };
   },
   computed: {
@@ -136,6 +152,7 @@ export default {
 
         this.input.id = result.data.serviceCategory.id;
         this.input.label = result.data.serviceCategory.label;
+        this.input.published = result.data.serviceCategory.published;
         this.input.description = result.data.serviceCategory.description;
 
         await this.$forceUpdate();

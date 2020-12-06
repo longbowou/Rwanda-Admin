@@ -13,6 +13,7 @@ export const serviceForViewFields = gql`
     rejected
     published
     publishedDisplay
+    publishedByAdmin
     submittedForApproval
     canBeAccepted
     canBeRejected

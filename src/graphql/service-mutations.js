@@ -35,6 +35,25 @@ export const deleteServiceCategory = gql`
   ${errorFields}
 `;
 
+export const sortServiceCategories = gql`
+  mutation($sorted: [SortedServiceCategoryInputType]!) {
+    sortServiceCategories(sorted: $sorted) {
+      isSorted
+    }
+  }
+`;
+
+export const publishUnPublishService = gql`
+  mutation($input: PublishUnPublishServiceInput!) {
+    publishUnPublishService(input: $input) {
+      errors {
+        ...errorFields
+      }
+    }
+  }
+  ${errorFields}
+`;
+
 export const acceptService = gql`
   mutation($input: AcceptServiceInput!) {
     acceptService(input: $input) {
