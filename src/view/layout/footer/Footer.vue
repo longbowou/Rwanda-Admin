@@ -21,7 +21,7 @@
         <a
           href="https://gitlab.com/longbowou"
           target="_blank"
-          class="text-white opacity-55 pl-0 text-hover-primary ml-2 mr-2"
+          class="text-dark opacity-55 pl-0 text-hover-primary ml-2 mr-2"
         >
           Longbowou
         </a>
@@ -29,7 +29,7 @@
         <a
           href="https://gitlab.com/Stalia"
           target="_blank"
-          class="text-white opacity-55 pl-0 text-hover-primary ml-2"
+          class="text-dark opacity-55 pl-0 text-hover-primary ml-2"
         >
           Esther KANGBIETE
         </a>
