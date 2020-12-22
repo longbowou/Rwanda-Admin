@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "rtl": "webpack --config webpack-rtl.config.js"
+    "rtl": "webpack --config webpack-rtl.config.js",
+    "vue-i18n-extract": "vue-i18n-extract report -v './src/view/**/*.?(js|vue)' -l './src/core/config/i18n/fr.json' -a"
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
@@ -46,6 +47,7 @@
     "vue-axios": "^2.1.4",
     "vue-highlight.js": "^3.1.0",
     "vue-i18n": "^8.17.4",
+    "vue-i18n-extract": "^1.1.10",
     "vue-inline-svg": "^1.3.0",
     "vue-router": "^3.1.5",
     "vue2-perfect-scrollbar": "^1.5.0",

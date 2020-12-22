@@ -37,9 +37,9 @@
         </p>
       </div>
 
-      <span class="text-muted font-weight-bold font-size-sm">{{
-        message.time
-      }}</span>
+      <span class="text-muted font-weight-bold font-size-sm">
+        {{ message.time }}
+      </span>
     </div>
   </div>
 </template>

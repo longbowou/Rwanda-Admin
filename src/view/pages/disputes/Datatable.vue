@@ -14,7 +14,9 @@
                 <inline-svg src="media/svg/icons/Code/Github.svg" />
                 <!--end::Svg Icon-->
               </span>
-              <h3 class="card-label">Disputes</h3>
+              <h3 class="card-label">
+                {{ $t("Disputes") }}
+              </h3>
             </div>
           </div>
 
@@ -27,21 +29,21 @@
                 >
                   <thead>
                     <tr>
-                      <th>Title</th>
-                      <th>Status</th>
-                      <th>Decision</th>
-                      <th>User</th>
-                      <th>Created At</th>
+                      <th>{{ $t("Title") }}</th>
+                      <th>{{ $t("Status") }}</th>
+                      <th>{{ $t("Decision") }}</th>
+                      <th>{{ $t("User") }}</th>
+                      <th>{{ $t("Created At") }}</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>Title</th>
-                      <th>Status</th>
-                      <th>Decision</th>
-                      <th>User</th>
-                      <th>Created At</th>
+                      <th>{{ $t("Title") }}</th>
+                      <th>{{ $t("Status") }}</th>
+                      <th>{{ $t("Decision") }}</th>
+                      <th>{{ $t("User") }}</th>
+                      <th>{{ $t("Created At") }}</th>
                       <th>Actions</th>
                     </tr>
                   </tfoot>

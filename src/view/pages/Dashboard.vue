@@ -392,8 +392,8 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch(SET_BREADCRUMB, [{ title: "Dashboard" }]);
-    this.$store.dispatch(SET_HEAD_TITLE, "Dashboard");
+    this.$store.dispatch(SET_BREADCRUMB, [{ title: this.$t("Dashboard") }]);
+    this.$store.dispatch(SET_HEAD_TITLE, this.$t("Dashboard"));
   },
   methods: {},
   apollo: {

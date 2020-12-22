@@ -154,7 +154,9 @@ export default {
   },
   methods: {
     async deleteRefundWay(id, title, btn) {
-      if (confirm("Do you really want to delete " + title + " ?")) {
+      if (
+        confirm(this.$t("Do you really want to delete") + " " + title + " ?")
+      ) {
         window.$(btn).addClass("disabled spinner spinner-danger spinner-right");
 
         let result = await this.$apollo.mutate({
@@ -165,7 +167,7 @@ export default {
         });
 
         if (window._.isEmpty(result.data.deleteRefundWay.errors)) {
-          this.notifySuccess("Refund way deleted successfully.");
+          this.notifySuccess(this.$t("Refund way deleted successfully."));
           this.datatable.ajax.reload(null, false);
         }
 

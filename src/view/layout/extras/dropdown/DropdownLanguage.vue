@@ -29,7 +29,7 @@ export default {
   name: "KTDropdownLanguage",
   data() {
     return {
-      languages: i18nService.languages
+      languages: i18nService.getLanguages()
     };
   },
   methods: {

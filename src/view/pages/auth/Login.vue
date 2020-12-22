@@ -25,7 +25,7 @@
                 <h2
                   class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg"
                 >
-                  Sign In
+                  {{ $t("Sign In") }}
                 </h2>
 
                 <template v-for="(notification, i) of loginNotifications">
@@ -46,9 +46,9 @@
                       >
                         {{ notification.message }}
                       </p>
-                      <span class="text-muted font-size-sm">{{
-                        notification.otherMessage
-                      }}</span>
+                      <span class="text-muted font-size-sm">
+                        {{ notification.otherMessage }}
+                      </span>
                     </div>
                   </div>
                 </template>
@@ -57,9 +57,9 @@
 
               <!--begin::Form group-->
               <div class="form-group">
-                <label class="font-size-h6 font-weight-bolder text-dark"
-                  >Username or Email</label
-                >
+                <label class="font-size-h6 font-weight-bolder text-dark">
+                  {{ $t("Username or Email") }}
+                </label>
                 <b-form-input
                   required
                   autofocus
@@ -82,14 +82,14 @@
               <!--begin::Form group-->
               <div class="form-group">
                 <div class="d-flex justify-content-between mt-n5">
-                  <label class="font-size-h6 font-weight-bolder text-dark pt-5"
-                    >Password</label
-                  >
+                  <label class="font-size-h6 font-weight-bolder text-dark pt-5">
+                    {{ $t("Password") }}
+                  </label>
 
                   <button
                     class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5"
                   >
-                    Forgot Password ?
+                    {{ $t("Forgot Password ?") }}
                   </button>
                 </div>
                 <b-form-input
@@ -120,7 +120,7 @@
                   id="kt_login_singin_form_submit_button"
                   class="btn btn-dark font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-3"
                 >
-                  Sign In
+                  {{ $t("Sign In") }}
                 </button>
               </div>
               <!--end::Action-->

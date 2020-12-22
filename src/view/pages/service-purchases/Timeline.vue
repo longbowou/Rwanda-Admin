@@ -9,7 +9,7 @@
         </span>
 
         <h3 class="card-label">
-          Timeline
+          {{ $t("Timeline") }}
         </h3>
       </div>
     </div>
@@ -25,9 +25,9 @@
               </div>
 
               <div class="timeline-label mb-0 pt-1 pl-0">
-                <span :class="['font-weight-bold', 'text-' + timeline.color]">{{
-                  timeline.happenAt
-                }}</span>
+                <span :class="['font-weight-bold', 'text-' + timeline.color]">
+                  {{ timeline.happenAt }}
+                </span>
               </div>
 
               <div class="timeline-content pl-0 pb-0 pr-0 pt-1">

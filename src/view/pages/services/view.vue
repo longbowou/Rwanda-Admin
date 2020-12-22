@@ -107,7 +107,8 @@
                         )
                       "
                     ></div>
-                    <strong>Reason :</strong> {{ service.rejectedReason }}<br />
+                    <strong>{{ $t("Reason") }} :</strong>
+                    {{ service.rejectedReason }}<br />
                   </div>
                 </div>
 
@@ -394,7 +395,7 @@ export default {
 
       this.$refs.rejectModal.hide();
 
-      this.notifySuccess("Service rejected successfully.");
+      this.notifySuccess(this.$t("Service rejected successfully."));
     },
     async updateService() {
       const activateSwitch = window.$("#activate-switch");

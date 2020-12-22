@@ -10,7 +10,7 @@
             <!--end::Svg Icon-->
           </span>
           <h3 class="card-label">
-            Purchase
+            {{ $t("Purchase") }}
           </h3>
           <span
             class="label label-xl font-weight-bold label-inline label-square label-light-dark"
@@ -109,7 +109,7 @@
 
         <div class="row">
           <h6 class="col-sm-9 font-weight-bold">
-            TOTAL
+            {{ $t("TOTAL") }}
           </h6>
           <div class="col-sm-3 text-right">
             <h5 class="font-weight-bold">
@@ -121,7 +121,7 @@
 
       <div class="card-footer pt-4 pb-4">
         <h6 class="text-dark-65 m-0">
-          Deadline
+          {{ $("Deadline") }}
           <span class="text-primary">{{ servicePurchase.deadlineAt }}</span>
         </h6>
       </div>
@@ -132,7 +132,7 @@
     <b-modal ref="handleModal" class="modal fade">
       <template #modal-header="{close}">
         <h5 class="modal-title">
-          Do you really want to handle the litigation ?
+          {{ $t("Do you really want to handle the litigation ?") }}
         </h5>
         <button type="button" class="close" @click="close()">
           <i aria-hidden="true" class="ki ki-close"></i>
@@ -164,7 +164,7 @@
           class="btn btn-square btn-light-primary font-weight-bold"
           @click="hide()"
         >
-          Cancel
+          {{ $t("Cancel") }}
         </button>
 
         <button
@@ -177,7 +177,7 @@
             !approve && 'btn-light-danger'
           ]"
         >
-          Handle
+          {{ $t("Handle") }}
         </button>
       </template>
     </b-modal>
@@ -251,7 +251,7 @@ export default {
 
       this.$emit("litigation-handled", result.data.handleLitigation.litigation);
 
-      this.notifySuccess("Litigation handled successfully.");
+      this.notifySuccess(this.$t("Litigation handled successfully."));
     }
   }
 };

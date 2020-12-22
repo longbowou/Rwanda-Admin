@@ -73,7 +73,7 @@
             </span>
           </div>
           <div class="alert-text text-justify font-weight-bold">
-            <strong>Reason :</strong> {{ litigation.reason }}<br />
+            <strong>{{ $t("Reason") }} :</strong> {{ litigation.reason }}<br />
           </div>
         </div>
 
