@@ -13,7 +13,7 @@
         />
         <span class="text-muted font-weight-bold mx-2">2020 ©</span>
         <a href="#" class="text-primary text-hover-primary">
-          Maison du Digitale
+          Maison du Digital
         </a>
       </div>
       <div class="nav nav-dark">

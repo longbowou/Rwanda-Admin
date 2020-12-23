@@ -112,5 +112,7 @@
   "Do you really want to accept the service {title} ?": "Voulez-vous vraiment accepter le service {title} ?",
   "Service accepted successfully.": "Service accepté avec succès.",
   "Service rejected successfully.": "Service rejeté avec succès.",
-  "Service updated successfully.": "Service modifier avec succès."
+  "Service updated successfully.": "Service modifier avec succès.",
+  "Published By Admin": "Publié par l'administrateur",
+  "Service deleted successfully.": "Service supprimé avec succès."
 }
