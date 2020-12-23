@@ -83,3 +83,14 @@ export const rejectService = gql`
   ${errorFields}
   ${serviceForViewFields}
 `;
+
+export const deleteService = gql`
+  mutation($id: UUID!) {
+    deleteService(id: $id) {
+      errors {
+        ...errorFields
+      }
+    }
+  }
+  ${errorFields}
+`;

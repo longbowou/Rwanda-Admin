@@ -65,6 +65,7 @@ type AdminMutation {
     createServiceCategory(input: CreateServiceCategoryInput!): CreateServiceCategory
     deleteAdmin(id: UUID!): DeleteAdmin
     deleteRefundWay(id: UUID!): DeleteRefundWay
+    deleteService(id: UUID!): DeleteService
     deleteServiceCategory(id: UUID!): DeleteServiceCategory
     handleLitigation(input: HandleLitigationInput!): HandleLitigation
     login(input: LoginInput!): LoginAdmin
@@ -161,6 +162,10 @@ type DeleteAdmin {
 }
 
 type DeleteRefundWay {
+    errors: [ErrorType]
+}
+
+type DeleteService {
     errors: [ErrorType]
 }
 
@@ -580,6 +585,8 @@ type UserType {
     createdAt: DateTime!
     dateJoined: DateTime!
     email: String!
+    emailVerificationExpireAt: DateTime
+    emailVerified: Boolean!
     firstName: String!
     id: UUID!
     image: String

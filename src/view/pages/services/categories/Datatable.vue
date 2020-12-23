@@ -199,6 +199,8 @@ export default {
           this.$t("Do you really want to delete {title} ?", { title: label })
         )
       ) {
+        window.$(btn).addClass("disabled spinner spinner-danger spinner-right");
+
         let result = await this.$apollo.mutate({
           mutation: deleteServiceCategory,
           variables: {
@@ -206,16 +208,14 @@ export default {
           }
         });
 
-        window.$(btn).addClass("disabled spinner spinner-danger spinner-right");
+        window
+          .$(btn)
+          .removeClass("disabled spinner spinner-danger spinner-right");
 
         if (window._.isEmpty(result.data.deleteServiceCategory.errors)) {
           this.notifySuccess(this.$t("Service Category deleted successfully."));
           this.datatable.ajax.reload(null, false);
         }
-
-        window
-          .$(btn)
-          .removeClass("disabled spinner spinner-danger spinner-right");
       } else {
         btn.blur();
       }
