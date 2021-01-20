@@ -121,7 +121,7 @@
 
       <div class="card-footer pt-4 pb-4">
         <h6 class="text-dark-65 m-0">
-          {{ $("Deadline") }}
+          {{ $t("Deadline") }}
           <span class="text-primary">{{ servicePurchase.deadlineAt }}</span>
         </h6>
       </div>
