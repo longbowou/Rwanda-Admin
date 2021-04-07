@@ -1,14 +1,22 @@
 version: '3'
 
 services:
-  app:
-    container_name: rwanda_admin_app
+  rwanda_admin:
+    container_name: rwanda_admin
     build:
       context: .
       dockerfile: Dockerfile
-    command: yarn serve
-    privileged: true
+    command: http-server dist
     volumes:
       - .:/app
     ports:
       - 4000:8080
+    environment:
+      VIRTUAL_PORT: 4000
+      VIRTUAL_HOST: admin.mdtaf.com,www.admin.mdtaf.com
+      LETSENCRYPT_HOST: admin.mdtaf.com,www.admin.mdtaf.com
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
