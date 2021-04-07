@@ -15,6 +15,7 @@ services:
       VIRTUAL_PORT: 4000
       VIRTUAL_HOST: admin.mdtaf.com,www.admin.mdtaf.com
       LETSENCRYPT_HOST: admin.mdtaf.com,www.admin.mdtaf.com
+    restart: always
 
 networks:
   default:
