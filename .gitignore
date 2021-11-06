@@ -21,7 +21,7 @@ yarn-error.log*
 *.sln
 *.sw?
 
-yarn.lock
-package-lock.json
+#yarn.lock
+#package-lock.json
 
 /live/
