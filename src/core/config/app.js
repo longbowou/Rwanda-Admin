@@ -1,1 +1,1 @@
-export const BRAND = "MDTAF";
+export const BRAND = "RWANDA";
