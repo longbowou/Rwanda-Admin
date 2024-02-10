@@ -310,7 +310,7 @@
                 <!--end::Svg Icon-->
               </span>
               <h3 class="card-label">
-                {{ $t("Accounting Operations") }}
+                {{ $t("Transactions") }}
               </h3>
             </div>
           </div>
@@ -353,19 +353,16 @@
 </style>
 
 <script>
-import { mapGetters } from "vuex";
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
+import {mapGetters} from "vuex";
+import {SET_BREADCRUMB} from "@/core/services/store/breadcrumbs.module";
+import {SET_HEAD_TITLE} from "@/core/services/store/htmlhead.module";
 import "@/assets/plugins/datatable/datatables.bundle";
-import {
-  accountOperationsUrl,
-  accountServicesUrl
-} from "@/core/server-side/urls";
+import {accountOperationsUrl, accountServicesUrl} from "@/core/server-side/urls";
 import i18nService from "@/core/services/i18n.service";
 import JwtService from "@/core/services/jwt.service";
-import { updateAccount } from "@/graphql/account-mutations";
-import { queryAccount } from "@/graphql/account-queries";
-import { toastMixin } from "@/view/mixins";
+import {updateAccount} from "@/graphql/account-mutations";
+import {queryAccount} from "@/graphql/account-queries";
+import {toastMixin} from "@/view/mixins";
 
 export default {
   name: "AccountView",

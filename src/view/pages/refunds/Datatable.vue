@@ -117,15 +117,15 @@
 </style>
 
 <script>
-import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
-import { SET_HEAD_TITLE } from "@/core/services/store/htmlhead.module";
+import {SET_BREADCRUMB} from "@/core/services/store/breadcrumbs.module";
+import {SET_HEAD_TITLE} from "@/core/services/store/htmlhead.module";
 import "@/assets/plugins/datatable/datatables.bundle";
-import { refundsUrl } from "@/core/server-side/urls";
+import {refundsUrl} from "@/core/server-side/urls";
 import JwtService from "@/core/services/jwt.service";
 import i18nService from "@/core/services/i18n.service";
-import { toastMixin } from "@/view/mixins";
-import { refuseRefund, processRefund } from "@/graphql/refund-mutations";
-import { mapGetters } from "vuex";
+import {toastMixin} from "@/view/mixins";
+import {refuseRefund} from "@/graphql/refund-mutations";
+import {mapGetters} from "vuex";
 
 export default {
   name: "Refunds",
@@ -207,27 +207,34 @@ export default {
           .$(btn)
           .addClass("disabled spinner spinner-success spinner-right");
 
-        let result = await this.$apollo.mutate({
-          mutation: processRefund,
-          variables: {
-            id: id
-          }
-        });
+        // let result = await this.$apollo.mutate({
+        //   mutation: processRefund,
+        //   variables: {
+        //     id: id
+        //   }
+        // });
 
-        window
-          .$(btn)
-          .removeClass("disabled spinner spinner-success spinner-right");
+        setTimeout(() => {
+          this.notifyError("Oops error while processing the refund !");
+          window
+              .$(btn)
+              .removeClass("disabled spinner spinner-success spinner-right");
+        }, 900);
 
-        let message = result.data.processRefund.error;
-
-        if (result.data.processRefund.result !== null) {
-          message = result.data.processRefund.result;
-          this.datatable.ajax.reload(null, false);
-          this.notifySuccess(message);
-          return;
-        }
-
-        this.notifyError(message);
+        // window
+        //   .$(btn)
+        //   .removeClass("disabled spinner spinner-success spinner-right");
+        //
+        // let message = result.data.processRefund.error;
+        //
+        // if (result.data.processRefund.result !== null) {
+        //   message = result.data.processRefund.result;
+        //   this.datatable.ajax.reload(null, false);
+        //   this.notifySuccess(message);
+        //   return;
+        // }
+        //
+        // this.notifyError(message);
       } else {
         btn.blur();
       }
