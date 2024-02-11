@@ -76,6 +76,10 @@ Feel free to try it out. Check the credentials below.
 * **Multi-platform Accessibility**: Ensure the app is accessible across various devices and platforms, including
   smartphones, tablets, and desktops, to maximize user convenience.
 
+* **Development & Deployment**: Rwanda utilizes Docker containers to streamline its development and deployment
+  processes, bolstering the
+  efficiency and consistency of its backend and frontend applications.
+
 ## Architecture
 
 The application architecture is split in three different parts: app(backend), frontend for seller and buyer accounts,
