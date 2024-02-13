@@ -206,6 +206,12 @@ docker compose run --rm admin yarn
 docker compose run --rm admin yarn build
 ```
 
+### Run
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d admin
+```
+
 ## Where is the application running?
 
 - Account - [http://localhost:3000/](http://localhost:3000/)
