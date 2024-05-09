@@ -178,7 +178,7 @@ This repository is composed of three git submodules for each part.
 - Clone the repository
 
 ```bash
-git clone git@gitlab.com:rwanda/rwanda-platform.git --recurse-submodules
+git clone git@github.com:longbowou/Rwanda-Platform.git --recurse-submodules
 ```
 
 - Build the application
